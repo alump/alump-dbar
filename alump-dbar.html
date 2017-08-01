@@ -1,0 +1,299 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<!--
+Distribution Bar element providing presentation of distribution
+
+Example:
+
+    <apolylump-dbar values='[45,55]' texts='["no 45%","yes 55%"]' width='300'></apolylump-dbar>
+
+@group aPolyLump Elements
+@element alump-dbar
+@demo demo/index.html
+@hero hero.svg
+-->
+<dom-module id="alump-dbar">
+  <template>
+    <style>
+       :host {
+        display: block;
+        user-select: none;
+      }
+
+       :host .parts {
+        overflow: hidden;
+        white-space: nowrap;
+        padding: 3px;
+        box-sizing: border-box;
+      }
+
+      :host .parts .part {
+        display: inline-block;
+        background-color: gray;
+        margin: 0;
+        padding: 0.25em 0.5em;
+        position: relative;
+        box-sizing: border-box;
+      }
+
+      :host(.alump-shade) .parts .part {
+        box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5), 0px 15px 5px rgba(255, 255, 255, 0.2) inset, 0px -10px 5px rgba(0, 0, 0, 0.2) inset;
+      }
+
+      :host(.clickable) .parts .part {
+        cursor: pointer;
+      }
+
+       :host(.alump-shade.clickable) .parts .part:hover {
+        box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5), 0px 15px 5px rgba(255, 255, 255, 0.3) inset, 0px -10px 5px rgba(0, 0, 0, 0.2) inset;
+      }
+
+       :host .parts .part-0,
+       :host .parts .part-6 {
+        background-color: #800;
+      }
+
+       :host .parts .part-1,
+       :host .parts .part-7 {
+        background-color: #060;
+      }
+
+       :host .parts .part-2,
+       :host .parts .part-8 {
+        background-color: #008;
+      }
+
+       :host .parts .part-3,
+       :host .parts .part-9 {
+        background-color: #660;
+      }
+
+       :host .parts .part-4,
+       :host .parts .part-10 {
+        background-color: #066;
+      }
+
+       :host .parts .part-5,
+       :host .parts .part-11 {
+        background-color: #606;
+      }
+
+       :host .parts .part .text {
+        display: inline-block;
+        width: 100%;
+        color: white;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        cursor: default;
+        pointer-events: none;
+        vertical-align: middle;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+      }
+
+       :host .parts .part:first-child {
+        border-top-left-radius: 20px;
+        border-bottom-left-radius: 20px;
+      }
+
+       :host .parts .part:last-child {
+        border-top-right-radius: 20px;
+        border-bottom-right-radius: 20px;
+      }
+
+       :host .parts .part {
+        transition: width 0.5s linear;
+        -moz-transition: width 0.5s linear;
+        -webkit-transition: width 0.5s linear;
+        -o-transition: width 0.5s linear;
+      }
+    </style>
+    <div class="parts"></div>
+  </template>
+
+  <script>
+    /**
+     * `alump-dbar`
+     * Distribution Bar
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class AlumpDbar extends Polymer.Element {
+      static get is() { return 'alump-dbar'; }
+      static get properties() {
+        return {
+          /**
+            * Values of parts
+            */
+          values: {
+            type: Array,
+            value: [0],
+            observer: '_valuesChanged'
+          },
+          /**
+          * Array of texts shown in parts. If undefined values are shown instead.
+          */
+          texts: {
+            type: Array,
+            value: undefined,
+            observer: '_valuesChanged'
+          },
+          /**
+          * Width of bar in pixels
+          */
+          width: {
+            type: Number,
+            value: 600,
+            observer: '_widthChanged'
+          },
+          /**
+          * Minimum width of part in pixels
+          */
+          minpartwidth: {
+            type: Number,
+            value: 40,
+            observer: '_minPartWidthChanged'
+          },
+
+          itemFormatter: {
+            type: Function,
+            value: (number, text) => {
+                return (number, text) => {
+                if (text) {
+                  return text;
+                } else {
+                  return Math.round(number);
+                }
+              }
+            },
+            observer: "_itemFormatterChanged"
+          },
+
+
+          /**
+          * Get number of parts defined
+          */
+          partcount: {
+            type: Number,
+            readOnly: true,
+            computed: '_computePartCount()'
+          },
+          /**
+          * Get sum of all values
+          */
+          valuesum: {
+            type: Number,
+            readOnly: true,
+            computed: '_computeValueSum()'
+          }
+        };
+      }
+
+      _valuesChanged() {
+        this._doRender();
+      }
+
+      _widthChanged() {
+        this._doRender();
+      }
+
+      _minPartWidthChanged() {
+        this._doRender();
+      }
+
+      _itemFormatterChanged() {
+        this._doRender();
+      }
+
+      _doRender() {
+        this._debouncer = Polymer.Debouncer.debounce(this._debouncer,
+          Polymer.Async.timeOut.after(250), () => { this._render(); });
+      }
+
+      _computePartCount() {
+        if (this.values) {
+          return this.values.length;
+        } else {
+          return 0;
+        }
+      }
+
+      _computeValueSum() {
+        var sum = 0;
+        if (this.values) {
+          for (let i = 0; i < this.values.length; ++i) {
+            var val = this.values[i];
+            if (!isNaN(val) && val >= 0) {
+              sum += val;
+            }
+          }
+        }
+        return sum;
+      }
+      _render() {
+        var partsElement = this.shadowRoot.querySelector('.parts');
+        for (let i = partsElement.children.length; i < this.values.length; ++i) {
+          var partElement = document.createElement("div");
+          partElement.setAttribute("class", "part part-" + i);
+          partElement.addEventListener("click", function (e) { this._handlePartClick(e) }.bind(this));
+          var textElement = document.createElement("div");
+          textElement.setAttribute("class", "text");
+          partElement.appendChild(textElement);
+          Polymer.dom(partsElement).appendChild(partElement);
+        }
+        while (partsElement.children.length > this.values.length) {
+          Polymer.dom(partsElement).removeChild(partsElement.children[partsElement.children.length - 1]);
+        }
+
+        var sum = this._computeValueSum();
+        var pixelValue = 0;
+        if (sum != 0) {
+          var availableSpace = this.width - this.minpartwidth * this.values.length;
+          var pixelValue = availableSpace / sum;
+        }
+
+        for (let i = 0; i < this.values.length; ++i) {
+          var partElement = partsElement.children[i];
+          var value = this.values[i] > 0 ? this.values[i] : 0;
+          if (sum == 0) {
+            partElement.style.width = "" + (this.width / this.values.length) + "px";
+          } else {
+            partElement.style.width = "" + (this.minpartwidth + value * pixelValue) + "px";
+          }
+
+          var textElement = partElement.querySelector(".text");
+          if(this.texts && this.texts.length > i && this.texts[i]) {
+            textElement.innerHTML = this.itemFormatter(value, this.texts[i]);
+          } else {
+            textElement.innerHTML = this.itemFormatter(value);
+          }
+        }
+      }
+
+      _handlePartClick(e) {
+        var partsElement = this.shadowRoot.querySelector('.parts');
+        var partElements = partsElement.childNodes;
+        for (let i = 0; i < partElements.length; ++i) {
+          if (partElements[i] == e.target) {
+            var value = this.values[i];
+            var text = this.texts === undefined ? undefined : this.texts[i];
+            this.dispatchEvent(new CustomEvent('partclick', {
+              detail: {
+                'part': i,
+                'value': value,
+                'text': text,
+                'event': e
+              },
+              bubbles: true
+            }));
+            return;
+          }
+        }
+      }
+    }
+
+    window.customElements.define(AlumpDbar.is, AlumpDbar);
+  </script>
+</dom-module>

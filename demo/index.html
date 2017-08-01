@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+  <title>alump-dbar demo</title>
+
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+  <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+  <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+  <link rel="import" href="../alump-dbar.html">
+
+  <style>
+    div#output {
+      font-family: monospace;
+      font-size: small;
+      height: 50px;
+      width: 100%;
+      margin-top: 20px;
+      color: black;
+      background: transparent;
+      overflow-x: hidden;
+      overflow-y: scroll;
+      padding: 1em;
+      border: none;
+      outline: none;
+      border-radius: 3px;
+      box-sizing: border-box;
+    }
+
+    div#output p {
+      margin: 0px;
+    }
+  </style>
+
+  <custom-style>
+    <style is="custom-style" include="demo-pages-shared-styles">
+
+    </style>
+  </custom-style>
+</head>
+
+<body>
+  <div class="vertical-section-container centered">
+    <h3>Basic alump-dbar demo</h3>
+    <demo-snippet>
+      <template>
+        <alump-dbar class="alump-shade" width="550" values="[1,2,3,4]">
+        </alump-dbar>
+      </template>
+    </demo-snippet>
+  </div>
+
+  <div class="vertical-section-container centered">
+    <h3>With only labels</h3>
+    <demo-snippet>
+      <template>
+        <alump-dbar id="dbar2" class="alump-shade" values="[8,14]" texts='["no","yes"]' width="550" minpartwidth="30">
+        </alump-dbar>
+      </template>
+    </demo-snippet>
+  </div>
+
+  <div class="vertical-section-container centered">
+    <h3>Multiple values and number formatting</h3>
+    <demo-snippet>
+      <template>
+        <alump-dbar id="dbar3" values="[3,23,1,0,12.5,7,14,3,6.61]" width="550" minpartwidth="25">
+        </alump-dbar>
+
+        <script>
+          window.addEventListener("WebComponentsReady", function (e) {
+            document.getElementById("dbar3").itemFormatter = (value, text) => {
+              return value.toFixed(2);
+            };
+          });
+        </script>
+      </template>
+    </demo-snippet>
+  </div>
+
+  <div class="vertical-section-container centered">
+    <h3>With labels and clickhandling</h3>
+    <demo-snippet>
+      <template>
+        <alump-dbar id="dbar1" values="[1,2,3,4]" texts='["foo","bar","lorem ipsum","Diipa daapa juupa joo"]' width="550" minpartwidth="50"
+          class="clickable">
+        </alump-dbar>
+        <div id="output">
+          <p>Clicking events are printed here...</p>
+        </div>
+        <script>
+          window.addEventListener("WebComponentsReady", function (e) {
+
+            let dbar1 = document.getElementById("dbar1");
+            dbar1.addEventListener("partclick", function (e) {
+              var outputElement = document.getElementById("output");
+              var value = e.detail.value;
+              var text = e.detail.text ? e.detail.text : value;
+              var msg = "Part '" + text + "' (" + value + ") clicked at " + e.detail.event.x + ":" + e.detail.event.y;
+              outputElement.innerHTML = outputElement.innerHTML + "<p>" + msg + "</p>";
+              outputElement.scrollTop = outputElement.scrollHeight;
+            });
+          });
+        </script>
+      </template>
+    </demo-snippet>
+  </div>
+
+    <div class="vertical-section-container centered">
+    <h3>Shuffle values of dbars</h3>
+    <demo-snippet>
+      <template>
+        <button id="shuffle" onclick="shuffle()">Shuffle the following examples</button>
+
+        <script>
+          function shuffle() {
+            document.getElementById("dbar1").values = [Math.random() * 100, Math.random() * 100, Math.random() * 100, Math.random() * 100];
+            document.getElementById("dbar2").values = [Math.random() * 100, Math.random() * 100];
+
+            var randomize = document.getElementById("dbar3").values.slice();
+            for (var i = 0; i < randomize.length; ++i) {
+              randomize[i] = Math.random() * 25;
+            }
+            document.getElementById("dbar3").values = randomize;
+          }
+        </script>
+      </template>
+    </demo-snippet>
+  </div>
+</body>
+
+</html>

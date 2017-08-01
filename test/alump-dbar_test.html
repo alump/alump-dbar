@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>alump-dbar test</title>
+
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../web-component-tester/browser.js"></script>
+
+    <link rel="import" href="../alump-dbar.html">
+  </head>
+  <body>
+
+    <test-fixture id="BasicTestFixture">
+      <template>
+        <alump-dbar></alump-dbar>
+      </template>
+    </test-fixture>
+
+    <test-fixture id="ChangedPropertyTestFixture">
+      <template>
+        <alump-dbar prop1="new-prop1"></alump-dbar>
+      </template>
+    </test-fixture>
+
+    <script>
+      suite('alump-dbar', function() {
+
+        test('instantiating the element with default properties works', function() {
+          var element = fixture('BasicTestFixture');
+          assert.equal(element.prop1, 'alump-dbar');
+          var elementShadowRoot = element.shadowRoot;
+          var elementHeader = elementShadowRoot.querySelector('h2');
+          assert.equal(elementHeader.innerHTML, 'Hello alump-dbar!');
+        });
+
+        test('setting a property on the element works', function() {
+          // Create a test fixture
+          var element = fixture('ChangedPropertyTestFixture');
+          assert.equal(element.prop1, 'new-prop1');
+          var elementShadowRoot = element.shadowRoot;
+          var elementHeader = elementShadowRoot.querySelector('h2');
+          assert.equal(elementHeader.innerHTML, 'Hello new-prop1!');
+        });
+
+      });
+    </script>
+
+  </body>
+</html>
