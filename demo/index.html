@@ -58,7 +58,7 @@
     <h3>With only labels</h3>
     <demo-snippet>
       <template>
-        <alump-dbar id="dbar2" class="alump-shade" values="[8,14]" texts='["no","yes"]' width="550" minpartwidth="30">
+        <alump-dbar id="dbar2" class="alump-shade" values="[8,14]" texts='["yes","no"]' width="550" minpartwidth="30">
         </alump-dbar>
       </template>
     </demo-snippet>
@@ -83,7 +83,7 @@
   </div>
 
   <div class="vertical-section-container centered">
-    <h3>With labels and clickhandling</h3>
+    <h3>With text, item formatter and clickhandling</h3>
     <demo-snippet>
       <template>
         <alump-dbar id="dbar1" values="[1,2,3,4]" texts='["foo","bar","lorem ipsum","Diipa daapa juupa joo"]' width="550" minpartwidth="50"
@@ -94,16 +94,16 @@
         </div>
         <script>
           window.addEventListener("WebComponentsReady", function (e) {
-
-            let dbar1 = document.getElementById("dbar1");
-            dbar1.addEventListener("partclick", function (e) {
+            document.getElementById("dbar1").addEventListener("partclick", function (e) {
               var outputElement = document.getElementById("output");
-              var value = e.detail.value;
-              var text = e.detail.text ? e.detail.text : value;
-              var msg = "Part '" + text + "' (" + value + ") clicked at " + e.detail.event.x + ":" + e.detail.event.y;
+              var text = e.detail.text ? e.detail.text : e.detail.value;
+              var msg = "Part '" + text + "' (" + e.detail.value + ") clicked at " + e.detail.event.x + ":" + e.detail.event.y;
               outputElement.innerHTML = outputElement.innerHTML + "<p>" + msg + "</p>";
               outputElement.scrollTop = outputElement.scrollHeight;
             });
+            document.getElementById("dbar1").itemFormatter = (value, text) => {
+              return "" + Math.round(value) + " <small>" + text + "</small>";
+            };
           });
         </script>
       </template>
@@ -121,6 +121,7 @@
             document.getElementById("dbar1").values = [Math.random() * 100, Math.random() * 100, Math.random() * 100, Math.random() * 100];
             document.getElementById("dbar2").values = [Math.random() * 100, Math.random() * 100];
 
+            // Slice is used to create copy of values array
             var randomize = document.getElementById("dbar3").values.slice();
             for (var i = 0; i < randomize.length; ++i) {
               randomize[i] = Math.random() * 25;

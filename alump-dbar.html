@@ -27,7 +27,7 @@ Example:
         box-sizing: border-box;
       }
 
-      :host .parts .part {
+       :host .parts .part {
         display: inline-block;
         background-color: gray;
         margin: 0;
@@ -36,11 +36,11 @@ Example:
         box-sizing: border-box;
       }
 
-      :host(.alump-shade) .parts .part {
+       :host(.alump-shade) .parts .part {
         box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5), 0px 15px 5px rgba(255, 255, 255, 0.2) inset, 0px -10px 5px rgba(0, 0, 0, 0.2) inset;
       }
 
-      :host(.clickable) .parts .part {
+       :host(.clickable) .parts .part {
         cursor: pointer;
       }
 
@@ -50,12 +50,12 @@ Example:
 
        :host .parts .part-0,
        :host .parts .part-6 {
-        background-color: #800;
+        background-color: #060;
       }
 
        :host .parts .part-1,
        :host .parts .part-7 {
-        background-color: #060;
+        background-color: #800;
       }
 
        :host .parts .part-2,
@@ -160,7 +160,7 @@ Example:
           itemFormatter: {
             type: Function,
             value: (number, text) => {
-                return (number, text) => {
+              return (number, text) => {
                 if (text) {
                   return text;
                 } else {
@@ -264,7 +264,7 @@ Example:
           }
 
           var textElement = partElement.querySelector(".text");
-          if(this.texts && this.texts.length > i && this.texts[i]) {
+          if (this.texts && this.texts.length > i && this.texts[i]) {
             textElement.innerHTML = this.itemFormatter(value, this.texts[i]);
           } else {
             textElement.innerHTML = this.itemFormatter(value);

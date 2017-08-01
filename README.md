@@ -1,6 +1,6 @@
 # \<alump-dbar\>
 
-Distribution Bar
+Distribution Bar for Polymer 2
 
 ## Install the Polymer-CLI
 
