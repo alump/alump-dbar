@@ -27,24 +27,24 @@ Example:
         box-sizing: border-box;
       }
 
-       :host .parts .part {
+      :host .parts .part {
         display: inline-block;
         background-color: gray;
         margin: 0;
-        padding: 0.25em 0.5em;
+        padding: 0.25em 10px;
         position: relative;
         box-sizing: border-box;
       }
 
-       :host(.alump-shade) .parts .part {
+      :host(.alump-shade) .parts .part {
         box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5), 0px 15px 5px rgba(255, 255, 255, 0.2) inset, 0px -10px 5px rgba(0, 0, 0, 0.2) inset;
       }
 
-       :host(.clickable) .parts .part {
+      :host(.alump-clickable) .parts .part {
         cursor: pointer;
       }
 
-       :host(.alump-shade.clickable) .parts .part:hover {
+      :host(.alump-shade.alump-clickable) .parts .part:hover {
         box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5), 0px 15px 5px rgba(255, 255, 255, 0.3) inset, 0px -10px 5px rgba(0, 0, 0, 0.2) inset;
       }
 
@@ -91,12 +91,31 @@ Example:
         text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
       }
 
-       :host .parts .part:first-child {
+      :host(.alump-r10) .parts .part:first-child {
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+      }
+
+      :host(.alump-r10) .parts .part:last-child {
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+      }
+
+      :host(.alump-r20) .parts .part {
+        padding-left: 15px;
+      }
+
+      :host(.alump-r20) .parts .part:last-child {
+        border-top-right-radius: 20px;
+        border-bottom-right-radius: 20px;
+      }
+
+       :host(.alump-r20) .parts .part:first-child {
         border-top-left-radius: 20px;
         border-bottom-left-radius: 20px;
       }
 
-       :host .parts .part:last-child {
+       :host(.alump-r20) .parts .part:last-child {
         border-top-right-radius: 20px;
         border-bottom-right-radius: 20px;
       }
@@ -159,12 +178,12 @@ Example:
 
           itemFormatter: {
             type: Function,
-            value: (number, text) => {
-              return (number, text) => {
-                if (text) {
-                  return text;
+            value: (item) => {
+              return (item) => {
+                if (item.text) {
+                  return item.text;
                 } else {
-                  return Math.round(number);
+                  return Math.round(item.value);
                 }
               }
             },
@@ -208,8 +227,8 @@ Example:
       }
 
       _doRender() {
-        this._debouncer = Polymer.Debouncer.debounce(this._debouncer,
-          Polymer.Async.timeOut.after(250), () => { this._render(); });
+        this._renderDebouncer = Polymer.Debouncer.debounce(this._renderDebouncer,
+          Polymer.Async.animationFrame, () => { this._render(); });
       }
 
       _computePartCount() {
@@ -264,11 +283,12 @@ Example:
           }
 
           var textElement = partElement.querySelector(".text");
+
+          var item = { index: i, value: value };
           if (this.texts && this.texts.length > i && this.texts[i]) {
-            textElement.innerHTML = this.itemFormatter(value, this.texts[i]);
-          } else {
-            textElement.innerHTML = this.itemFormatter(value);
+            item.text = this.texts[i];
           }
+          textElement.innerHTML = this.itemFormatter(item);
         }
       }
 

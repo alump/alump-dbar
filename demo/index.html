@@ -48,7 +48,7 @@
     <h3>Basic alump-dbar demo</h3>
     <demo-snippet>
       <template>
-        <alump-dbar class="alump-shade" width="550" values="[1,2,3,4]">
+        <alump-dbar width="550" values="[1,2,3,4]" class="alump-shade alump-r10">
         </alump-dbar>
       </template>
     </demo-snippet>
@@ -58,7 +58,7 @@
     <h3>With only labels</h3>
     <demo-snippet>
       <template>
-        <alump-dbar id="dbar2" class="alump-shade" values="[8,14]" texts='["yes","no"]' width="550" minpartwidth="30">
+        <alump-dbar id="dbar2" values="[8,14]" texts='["yes","no"]' width="550" minpartwidth="30" class="alump-shade alump-r20">
         </alump-dbar>
       </template>
     </demo-snippet>
@@ -73,8 +73,8 @@
 
         <script>
           window.addEventListener("WebComponentsReady", function (e) {
-            document.getElementById("dbar3").itemFormatter = (value, text) => {
-              return value.toFixed(2);
+            document.getElementById("dbar3").itemFormatter = (item) => {
+              return item.value.toFixed(2);
             };
           });
         </script>
@@ -87,7 +87,7 @@
     <demo-snippet>
       <template>
         <alump-dbar id="dbar1" values="[1,2,3,4]" texts='["foo","bar","lorem ipsum","Diipa daapa juupa joo"]' width="550" minpartwidth="50"
-          class="clickable">
+          class="alump-clickable alump-r20">
         </alump-dbar>
         <div id="output">
           <p>Clicking events are printed here...</p>
@@ -97,12 +97,12 @@
             document.getElementById("dbar1").addEventListener("partclick", function (e) {
               var outputElement = document.getElementById("output");
               var text = e.detail.text ? e.detail.text : e.detail.value;
-              var msg = "Part '" + text + "' (" + e.detail.value + ") clicked at " + e.detail.event.x + ":" + e.detail.event.y;
+              var msg = 'Part #' + e.detail.part + ' "' + e.detail.text + "' (" + e.detail.value + ") clicked at " + e.detail.event.x + ":" + e.detail.event.y;
               outputElement.innerHTML = outputElement.innerHTML + "<p>" + msg + "</p>";
               outputElement.scrollTop = outputElement.scrollHeight;
             });
-            document.getElementById("dbar1").itemFormatter = (value, text) => {
-              return "" + Math.round(value) + " <small>" + text + "</small>";
+            document.getElementById("dbar1").itemFormatter = (item) => {
+              return "" + Math.round(item.value) + " <small>" + item.text + "</small>";
             };
           });
         </script>
@@ -114,7 +114,7 @@
     <h3>Shuffle values of dbars</h3>
     <demo-snippet>
       <template>
-        <button id="shuffle" onclick="shuffle()">Shuffle the following examples</button>
+        <button id="shuffle" onclick="shuffle()">Randomize values of examples</button>
 
         <script>
           function shuffle() {
@@ -129,6 +129,32 @@
             document.getElementById("dbar3").values = randomize;
           }
         </script>
+      </template>
+    </demo-snippet>
+  </div>
+
+  <div class="vertical-section-container centered">
+    <h3>Add and remove values</h3>
+    <p>Remove value by clicking, add new value with button.</p>
+    <demo-snippet>
+      <template>
+        <alump-dbar id="dbar4" values="[10,20]" width="550" minpartwidth="20" class="alump-clickable alump-r10">
+        </alump-dbar>
+        <button id="addValue" onclick="addValue()">Add value</button>
+        <script>
+          function addValue() {
+            var values = document.getElementById("dbar4").values.slice();
+            values.push(Math.random() * 50);
+            document.getElementById("dbar4").values = values;
+          }
+          document.getElementById("dbar4").addEventListener("partclick", e => {
+            var values = document.getElementById("dbar4").values.slice();
+            if(values.length > 1) {
+              values.splice(e.detail.part, 1);
+              document.getElementById("dbar4").values = values;
+            }
+          });
+         </script>
       </template>
     </demo-snippet>
   </div>
