@@ -1,7 +1,22 @@
 {
   "name": "alump-dbar",
   "description": "Distribution Bar",
+  "authors": [
+    "Sami Viitanen <sami.viitanen@vaadin.com>"
+  ],
+  "keywords": [
+    "web-components",
+    "web-component",
+    "polymer",
+    "distribution",
+    "bar"
+  ],
   "main": "alump-dbar.html",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alump/alump-dbar"
+  },
+  "license": "Apache-2.0",
   "dependencies": {
     "polymer": "Polymer/polymer#^2.0.0"
   },

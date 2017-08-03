@@ -1,0 +1,17 @@
+
+{
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
+  "plugins": [
+    "html"
+  ],
+  "globals": {
+    "CustomElements": false,
+    "HTMLImports": false,
+    "Polymer": false,
+    "WeakMap": false
+  }
+}
