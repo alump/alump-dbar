@@ -2,7 +2,6 @@ sudo: false
 dist: xenial
 language: node_js
 node_js: 8.0
-jdk: oraclejdk8
 
 cache:
   directories:
@@ -17,6 +16,7 @@ install:
   - polymer install
 
 before_script:
+  - jdk_switcher use oraclejdk8
   - gulp lint
   - polymer lint --rules polymer-2 --input *.html
   - xvfb-run -s '-screen 0 1024x768x24' polymer test
