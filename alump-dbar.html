@@ -227,8 +227,12 @@ Example:
       }
 
       _doRender() {
-        this._renderDebouncer = Polymer.Debouncer.debounce(this._renderDebouncer,
-          Polymer.Async.animationFrame, () => { this._render(); });
+        if(Polymer.Debouncer) {
+          this._renderDebouncer = Polymer.Debouncer.debounce(this._renderDebouncer,
+            Polymer.Async.animationFrame, () => { this._render(); });
+        } else {
+          this._render();
+        }
       }
 
       _computePartCount() {
@@ -260,10 +264,10 @@ Example:
           var textElement = document.createElement("div");
           textElement.setAttribute("class", "text");
           partElement.appendChild(textElement);
-          Polymer.dom(partsElement).appendChild(partElement);
+          partsElement.appendChild(partElement);
         }
         while (partsElement.children.length > this.values.length) {
-          Polymer.dom(partsElement).removeChild(partsElement.children[partsElement.children.length - 1]);
+          partsElement.removeChild(partsElement.children[partsElement.children.length - 1]);
         }
 
         var sum = this._computeValueSum();
