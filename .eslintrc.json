@@ -1,5 +1,6 @@
 
 {
+  "extends": ["eslint:recommended", "google"],
   "env": {
     "browser": true,
     "node": true,
@@ -11,7 +12,7 @@
   "globals": {
     "CustomElements": false,
     "HTMLImports": false,
-    "Polymer": false,
+    "Polymer": true,
     "WeakMap": false
   }
 }

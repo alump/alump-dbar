@@ -37,7 +37,7 @@ Example:
       }
 
       :host(.alump-shade) .parts .part {
-        box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5), 0px 15px 5px rgba(255, 255, 255, 0.2) inset, 0px -10px 5px rgba(0, 0, 0, 0.2) inset;
+        box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5), 0 15px 5px rgba(255, 255, 255, 0.2) inset, 0 -10px 5px rgba(0, 0, 0, 0.2) inset;
       }
 
       :host(.alump-clickable) .parts .part {
@@ -45,7 +45,7 @@ Example:
       }
 
       :host(.alump-shade.alump-clickable) .parts .part:hover {
-        box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5), 0px 15px 5px rgba(255, 255, 255, 0.3) inset, 0px -10px 5px rgba(0, 0, 0, 0.2) inset;
+        box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5), 0 15px 5px rgba(255, 255, 255, 0.3) inset, 0 -10px 5px rgba(0, 0, 0, 0.2) inset;
       }
 
        :host .parts .part-0,
@@ -140,7 +140,17 @@ Example:
      * @demo demo/index.html
      */
     class AlumpDbar extends Polymer.Element {
-      static get is() { return 'alump-dbar'; }
+      /**
+       * Element type
+       * @return {string} alump-dbar
+       */
+      static get is() {
+        return 'alump-dbar';
+      }
+      /**
+       * Element properties
+       * @return {object} properties object
+       */ 
       static get properties() {
         return {
           /**
@@ -149,7 +159,7 @@ Example:
           values: {
             type: Array,
             value: [0],
-            observer: '_valuesChanged'
+            observer: '_valuesChanged',
           },
           /**
           * Array of texts shown in parts. If undefined values are shown instead.
@@ -157,25 +167,30 @@ Example:
           texts: {
             type: Array,
             value: undefined,
-            observer: '_valuesChanged'
+            observer: '_valuesChanged',
           },
+
           /**
           * Width of bar in pixels
           */
           width: {
             type: Number,
             value: 600,
-            observer: '_widthChanged'
+            observer: '_widthChanged',
           },
+
           /**
           * Minimum width of part in pixels
           */
           minpartwidth: {
             type: Number,
             value: 40,
-            observer: '_minPartWidthChanged'
+            observer: '_minPartWidthChanged',
           },
 
+          /**
+          * Formatter method used to generate inner HTML for item
+          */
           itemFormatter: {
             type: Function,
             value: (item) => {
@@ -185,11 +200,10 @@ Example:
                 } else {
                   return Math.round(item.value);
                 }
-              }
+              };
             },
-            observer: "_itemFormatterChanged"
+            observer: '_itemFormatterChanged',
           },
-
 
           /**
           * Get number of parts defined
@@ -197,44 +211,66 @@ Example:
           partcount: {
             type: Number,
             readOnly: true,
-            computed: '_computePartCount()'
+            computed: '_computePartCount()',
           },
+
           /**
           * Get sum of all values
           */
           valuesum: {
             type: Number,
             readOnly: true,
-            computed: '_computeValueSum()'
-          }
+            computed: '_computeValueSum()',
+          },
         };
       }
 
+      /**
+       * Observer for values
+       */ 
       _valuesChanged() {
-        this._doRender();
+        this._scheduleRender();
       }
 
+      /**
+       * Observer for width
+       */ 
       _widthChanged() {
-        this._doRender();
+        this._scheduleRender();
       }
 
+      /**
+       * Observer for minimal part width
+       */ 
       _minPartWidthChanged() {
-        this._doRender();
+        this._scheduleRender();
       }
 
+      /**
+       * Observer for item formatter
+       */
       _itemFormatterChanged() {
-        this._doRender();
+        this._scheduleRender();
       }
 
-      _doRender() {
-        if(Polymer.Debouncer) {
+      /**
+       * Private will schedule render
+       */
+      _scheduleRender() {
+        if (Polymer.Debouncer) {
           this._renderDebouncer = Polymer.Debouncer.debounce(this._renderDebouncer,
-            Polymer.Async.animationFrame, () => { this._render(); });
+            Polymer.Async.animationFrame, () => {
+              this._render();
+            });
         } else {
           this._render();
         }
       }
 
+      /**
+       * Private compute amout of values
+       * @return {number} Amount of values
+       */
       _computePartCount() {
         if (this.values) {
           return this.values.length;
@@ -243,11 +279,15 @@ Example:
         }
       }
 
+      /**
+       * Private compute total sum of values
+       * @return {number} Sum of values
+       */
       _computeValueSum() {
-        var sum = 0;
+        let sum = 0;
         if (this.values) {
           for (let i = 0; i < this.values.length; ++i) {
-            var val = this.values[i];
+            let val = this.values[i];
             if (!isNaN(val) && val >= 0) {
               sum += val;
             }
@@ -255,40 +295,54 @@ Example:
         }
         return sum;
       }
+
+      /**
+       * Private renderer, call via _scheduleRender
+       */
       _render() {
-        var partsElement = this.shadowRoot.querySelector('.parts');
+        let partsElement = this.shadowRoot.querySelector('.parts');
         for (let i = partsElement.children.length; i < this.values.length; ++i) {
-          var partElement = document.createElement("div");
-          partElement.setAttribute("class", "part part-" + i);
-          partElement.addEventListener("click", function (e) { this._handlePartClick(e) }.bind(this));
-          var textElement = document.createElement("div");
-          textElement.setAttribute("class", "text");
+          let partElement = document.createElement('div');
+          partElement.setAttribute('class', 'part part-' + i);
+          partElement.addEventListener('click', function(e) {
+            this._handlePartClick(e);
+          }.bind(this));
+          let textElement = document.createElement('div');
+          textElement.setAttribute('class', 'text');
           partElement.appendChild(textElement);
           partsElement.appendChild(partElement);
         }
         while (partsElement.children.length > this.values.length) {
-          partsElement.removeChild(partsElement.children[partsElement.children.length - 1]);
+          let index = partsElement.children.length - 1;
+          partsElement.removeChild(partsElement.children[index]);
         }
 
-        var sum = this._computeValueSum();
-        var pixelValue = 0;
+        let sum = this._computeValueSum();
+        let pixelValue = 0;
         if (sum != 0) {
-          var availableSpace = this.width - this.minpartwidth * this.values.length;
-          var pixelValue = availableSpace / sum;
+          let availableSpace = this.width - this.minpartwidth * this.values.length;
+          pixelValue = availableSpace / sum;
         }
 
         for (let i = 0; i < this.values.length; ++i) {
-          var partElement = partsElement.children[i];
-          var value = this.values[i] > 0 ? this.values[i] : 0;
+          let partElement = partsElement.children[i];
+          let value = this.values[i] > 0 ? this.values[i] : 0;
           if (sum == 0) {
-            partElement.style.width = "" + (this.width / this.values.length) + "px";
+            partElement.style.width = ''
+              + (this.width / this.values.length)
+              + 'px';
           } else {
-            partElement.style.width = "" + (this.minpartwidth + value * pixelValue) + "px";
+            partElement.style.width = ''
+              + (this.minpartwidth + value * pixelValue)
+              + 'px';
           }
 
-          var textElement = partElement.querySelector(".text");
+          let textElement = partElement.querySelector('.text');
 
-          var item = { index: i, value: value };
+          let item = {
+            index: i,
+            value: value,
+          };
           if (this.texts && this.texts.length > i && this.texts[i]) {
             item.text = this.texts[i];
           }
@@ -296,21 +350,25 @@ Example:
         }
       }
 
+      /**
+       * Private click handler
+       * @param {event} e Original click event
+       */
       _handlePartClick(e) {
-        var partsElement = this.shadowRoot.querySelector('.parts');
-        var partElements = partsElement.childNodes;
+        let partsElement = this.shadowRoot.querySelector('.parts');
+        let partElements = partsElement.childNodes;
         for (let i = 0; i < partElements.length; ++i) {
           if (partElements[i] == e.target) {
-            var value = this.values[i];
-            var text = this.texts === undefined ? undefined : this.texts[i];
+            let value = this.values[i];
+            let text = this.texts === undefined ? undefined : this.texts[i];
             this.dispatchEvent(new CustomEvent('partclick', {
               detail: {
                 'part': i,
                 'value': value,
                 'text': text,
-                'event': e
+                'event': e,
               },
-              bubbles: true
+              bubbles: true,
             }));
             return;
           }

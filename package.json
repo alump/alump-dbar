@@ -30,9 +30,13 @@
     "gulp-stylelint": "^3.9.0",
     "polymer-cli": "^1.3.1",
     "stylelint": "^8.0.0",
-    "stylelint-config-vaadin": "latest",
+    "stylelint-config-vaadin": "^0.1.1",
     "wct-random-output": "^0.2.0",
     "web-component-tester": "^v6.0.0",
     "yargs": "latest"
+  },
+  "dependencies": {
+    "eslint-config-google": "^0.9.1",
+    "gulp-csslint": "^1.0.0"
   }
 }
