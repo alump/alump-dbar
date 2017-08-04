@@ -5,6 +5,8 @@
 
 Distribution Bar for Polymer 2
 
+[Online demo at webcomponents.org](https://www.webcomponents.org/element/alump/alump-dbar/demo/demo/index.html)
+
 ## Examples
 
 <!--
