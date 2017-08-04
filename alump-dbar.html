@@ -31,8 +31,8 @@ Example:
       :host(.alump-shade) {
         --alump-dbar-border-style: groove;
         --alump-dbar-border-width: 2px;
-        --alump-dbar-border-color: rgba(255,255,255,0.3);
-        --alump-dbar-text-color: rgba(255,255,255,0.9);
+        --alump-dbar-border-color: rgba(255, 255, 255, 0.3);
+        --alump-dbar-text-color: rgba(255, 255, 255, 0.9);
       }
 
        :host .parts {
@@ -43,23 +43,19 @@ Example:
       }
 
       :host(.alump-shade) .parts .part {
-        box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05), 0 15px 5px rgba(255, 255, 255, 0.1) inset, 0 -10px 5px rgba(0, 0, 0, 0.05) inset;
+        box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.05), 0px 15px 5px rgba(255, 255, 255, 0.1) inset, 0px -10px 5px rgba(0, 0, 0, 0.05) inset;
       }
 
        :host .parts .part {
         display: inline-block;
         background-color: gray;
-        margin: 0;
+        margin: 0px;
         padding: 0.25em 10px;
         position: relative;
         box-sizing: border-box;
-        border-top-width: var(--alump-dbar-border-width, none);
-        border-bottom-width: var(--alump-dbar-border-width, none);
-        border-left-width: 0px;
-        border-right-width: 0px;
+        border-width: var(--alump-dbar-border-width, none) 0px var(--alump-dbar-border-width, none) 0px;
         border-style: var(--alump-dbar-border-style, none);
         border-color: var(--alump-dbar-border-color, transparent);
-
       }
 
        :host(.alump-clickable) .parts .part {
@@ -72,7 +68,7 @@ Example:
       }
 
        :host(.alump-shade.alump-clickable) .parts .part:hover {
-        box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5), 0 15px 5px rgba(255, 255, 255, 0.3) inset, 0 -10px 5px rgba(0, 0, 0, 0.2) inset;
+        box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.5), 0px 15px 5px rgba(255, 255, 255, 0.3) inset, 0px -10px 5px rgba(0, 0, 0, 0.2) inset;
       }
 
        :host .parts .part-0 {
@@ -344,7 +340,7 @@ Example:
         for (let i = partsElement.children.length; i < this.values.length; ++i) {
           let partElement = document.createElement('div');
           partElement.setAttribute('class', 'part part-' + i);
-          partElement.addEventListener('click', function (e) {
+          partElement.addEventListener('click', function(e) {
             this._handlePartClick(e);
           }.bind(this));
           let textElement = document.createElement('div');
@@ -360,7 +356,7 @@ Example:
         let sum = this._computeValueSum();
         let pixelValue = 0;
         let myWidth = this.width;
-        if(myWidth == null) {
+        if (myWidth == null) {
           myWidth = partsElement.clientWidth;
         }
         if (sum != 0) {

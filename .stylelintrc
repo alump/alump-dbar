@@ -1,5 +1,6 @@
 {
 "extends": "stylelint-config-vaadin",
   "rules": {
+    "length-zero-no-unit": null,
   },
 }
