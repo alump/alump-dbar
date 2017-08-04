@@ -1,13 +1,13 @@
 <link rel="import" href="../polymer/polymer-element.html">
 
 <!--
-Distribution Bar element providing presentation of distribution
+Distribution Bar element providing presentation of value distribution
 
 Example:
 
-    <apolylump-dbar values='[45,55]' texts='["no 45%","yes 55%"]' width='300'></apolylump-dbar>
+    <alump-dbar values="[45,55]" texts="['yes,'no']" width="300"></alump-dbar>
 
-@group aPolyLump Elements
+@group alump Elements
 @element alump-dbar
 @demo demo/index.html
 @hero hero.svg
@@ -20,6 +20,21 @@ Example:
         user-select: none;
       }
 
+      :host(.alump-r10) {
+        --alump-dbar-border-radius: 10px;
+      }
+
+      :host(.alump-r20) {
+        --alump-dbar-border-radius: 20px;
+      }
+
+      :host(.alump-shade) {
+        --alump-dbar-border-style: groove;
+        --alump-dbar-border-width: 2px;
+        --alump-dbar-border-color: rgba(255,255,255,0.3);
+        --alump-dbar-text-color: rgba(255,255,255,0.9);
+      }
+
        :host .parts {
         overflow: hidden;
         white-space: nowrap;
@@ -27,104 +42,129 @@ Example:
         box-sizing: border-box;
       }
 
-      :host .parts .part {
+      :host(.alump-shade) .parts .part {
+        box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05), 0 15px 5px rgba(255, 255, 255, 0.1) inset, 0 -10px 5px rgba(0, 0, 0, 0.05) inset;
+      }
+
+       :host .parts .part {
         display: inline-block;
         background-color: gray;
         margin: 0;
         padding: 0.25em 10px;
         position: relative;
         box-sizing: border-box;
+        border-top-width: var(--alump-dbar-border-width, none);
+        border-bottom-width: var(--alump-dbar-border-width, none);
+        border-left-width: 0px;
+        border-right-width: 0px;
+        border-style: var(--alump-dbar-border-style, none);
+        border-color: var(--alump-dbar-border-color, transparent);
+
       }
 
-      :host(.alump-shade) .parts .part {
-        box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5), 0 15px 5px rgba(255, 255, 255, 0.2) inset, 0 -10px 5px rgba(0, 0, 0, 0.2) inset;
-      }
-
-      :host(.alump-clickable) .parts .part {
+       :host(.alump-clickable) .parts .part {
         cursor: pointer;
       }
 
-      :host(.alump-shade.alump-clickable) .parts .part:hover {
+      :host(.alump-clickable) .parts .part:active {
+        -webkit-filter: brightness(0.5);
+        filter: brightness(0.5);
+      }
+
+       :host(.alump-shade.alump-clickable) .parts .part:hover {
         box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5), 0 15px 5px rgba(255, 255, 255, 0.3) inset, 0 -10px 5px rgba(0, 0, 0, 0.2) inset;
       }
 
-       :host .parts .part-0,
+       :host .parts .part-0 {
+        background-color: var(--alump-dbar-color0, #060);
+      }
+
+       :host .parts .part-1 {
+        background-color: var(--alump-dbar-color1, #800);
+      }
+
+       :host .parts .part-2 {
+        background-color: var(--alump-dbar-color2, #008);
+      }
+
+       :host .parts .part-3 {
+        background-color: var(--alump-dbar-color3, #660);
+      }
+
+       :host .parts .part-4 {
+        background-color: var(--alump-dbar-color4, #066);
+      }
+
+       :host .parts .part-5 {
+        background-color: var(--alump-dbar-color5, #606);
+      }
+
        :host .parts .part-6 {
-        background-color: #060;
+        background-color: var(--alump-dbar-color6, #060);
       }
 
-       :host .parts .part-1,
        :host .parts .part-7 {
-        background-color: #800;
+        background-color: var(--alump-dbar-color7, #800);
       }
 
-       :host .parts .part-2,
        :host .parts .part-8 {
-        background-color: #008;
+        background-color: var(--alump-dbar-color8, #008);
       }
 
-       :host .parts .part-3,
        :host .parts .part-9 {
-        background-color: #660;
+        background-color: var(--alump-dbar-color9, #660);
       }
 
-       :host .parts .part-4,
        :host .parts .part-10 {
-        background-color: #066;
+        background-color: var(--alump-dbar-color10, #066);
       }
 
-       :host .parts .part-5,
        :host .parts .part-11 {
-        background-color: #606;
+        background-color: var(--alump-dbar-color11, #606);
       }
 
        :host .parts .part .text {
         display: inline-block;
         width: 100%;
-        color: white;
+        color: var(--alump-dbar-text-color, white);
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
         cursor: default;
         pointer-events: none;
         vertical-align: middle;
-        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        text-align: var(--alump-dbar-text-align, left);
       }
 
-      :host(.alump-r10) .parts .part:first-child {
-        border-top-left-radius: 10px;
-        border-bottom-left-radius: 10px;
+      :host(.alump-shade) .parts .part .text {
+        text-shadow: var(--alump-dbar-text-shadow, 0px 0px 2px rgba(0, 0, 0, 0.5));
       }
 
-      :host(.alump-r10) .parts .part:last-child {
-        border-top-right-radius: 10px;
-        border-bottom-right-radius: 10px;
+      :host .parts .part:first-child {
+        border-left-width: var(--alump-dbar-border-width, none);
       }
 
-      :host(.alump-r20) .parts .part {
+      :host .parts .part:last-child {
+        border-right-width: var(--alump-dbar-border-width, none);
+      }
+
+       :host .parts .part:first-child {
+        border-top-left-radius: var(--alump-dbar-border-radius, 0px);
+        border-bottom-left-radius: var(--alump-dbar-border-radius, 0px);
+      }
+
+       :host .parts .part:last-child {
+        border-top-right-radius: var(--alump-dbar-border-radius, 0px);
+        border-bottom-right-radius: var(--alump-dbar-border-radius, 0px);
+      }
+
+       :host(.alump-r20) .parts .part {
         padding-left: 15px;
       }
 
-      :host(.alump-r20) .parts .part:last-child {
-        border-top-right-radius: 20px;
-        border-bottom-right-radius: 20px;
-      }
-
-       :host(.alump-r20) .parts .part:first-child {
-        border-top-left-radius: 20px;
-        border-bottom-left-radius: 20px;
-      }
-
-       :host(.alump-r20) .parts .part:last-child {
-        border-top-right-radius: 20px;
-        border-bottom-right-radius: 20px;
-      }
-
        :host .parts .part {
-        transition: width 0.5s linear;
-        -moz-transition: width 0.5s linear;
-        -webkit-transition: width 0.5s linear;
-        -o-transition: width 0.5s linear;
+        transition: width var(--alump-dbar-animation-duration, 0.5s) linear;
+        -webkit-transition: width var(--alump-dbar-animation-duration, 0.5s) linear;
       }
     </style>
     <div class="parts"></div>
@@ -150,7 +190,7 @@ Example:
       /**
        * Element properties
        * @return {object} properties object
-       */ 
+       */
       static get properties() {
         return {
           /**
@@ -175,14 +215,14 @@ Example:
           */
           width: {
             type: Number,
-            value: 600,
+            value: null,
             observer: '_widthChanged',
           },
 
           /**
           * Minimum width of part in pixels
           */
-          minpartwidth: {
+          minPartWidth: {
             type: Number,
             value: 40,
             observer: '_minPartWidthChanged',
@@ -208,7 +248,7 @@ Example:
           /**
           * Get number of parts defined
           */
-          partcount: {
+          partCount: {
             type: Number,
             readOnly: true,
             computed: '_computePartCount()',
@@ -227,21 +267,21 @@ Example:
 
       /**
        * Observer for values
-       */ 
+       */
       _valuesChanged() {
         this._scheduleRender();
       }
 
       /**
        * Observer for width
-       */ 
+       */
       _widthChanged() {
         this._scheduleRender();
       }
 
       /**
        * Observer for minimal part width
-       */ 
+       */
       _minPartWidthChanged() {
         this._scheduleRender();
       }
@@ -304,7 +344,7 @@ Example:
         for (let i = partsElement.children.length; i < this.values.length; ++i) {
           let partElement = document.createElement('div');
           partElement.setAttribute('class', 'part part-' + i);
-          partElement.addEventListener('click', function(e) {
+          partElement.addEventListener('click', function (e) {
             this._handlePartClick(e);
           }.bind(this));
           let textElement = document.createElement('div');
@@ -319,8 +359,12 @@ Example:
 
         let sum = this._computeValueSum();
         let pixelValue = 0;
+        let myWidth = this.width;
+        if(myWidth == null) {
+          myWidth = partsElement.clientWidth;
+        }
         if (sum != 0) {
-          let availableSpace = this.width - this.minpartwidth * this.values.length;
+          let availableSpace = myWidth - this.minPartWidth * this.values.length;
           pixelValue = availableSpace / sum;
         }
 
@@ -333,7 +377,7 @@ Example:
               + 'px';
           } else {
             partElement.style.width = ''
-              + (this.minpartwidth + value * pixelValue)
+              + (this.minPartWidth + value * pixelValue)
               + 'px';
           }
 

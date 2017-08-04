@@ -6,6 +6,10 @@ Distribution Bar for Polymer 2
 
 First, make sure you have the [Polymer CLI](https://www.npmjs.com/package/polymer-cli) installed. Then run `polymer serve` to serve your element locally.
 
+## Releases
+### 0.1.0 (2017-08-04)
+* Initial release
+
 ## Viewing Your Element
 
 ```
