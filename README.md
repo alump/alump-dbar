@@ -23,6 +23,9 @@ Distribution Bar for Polymer 2
 ```
 
 ## Releases
+### 0.1.1 (2017-08-04)
+* Fixing project metadata to improve presentation at webcomponents.org
+* Fix box-sizing of parts
 ### 0.1.0 (2017-08-04)
 * Initial release
 

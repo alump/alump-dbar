@@ -1,6 +1,6 @@
 {
   "name": "alump-dbar",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Polymer element providing distribution bar",
   "main": "alump-dbar.html",
   "repository": "alump/alump-dbar",
