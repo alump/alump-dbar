@@ -18,7 +18,7 @@ Distribution Bar for Polymer 2
 ```
 -->
 ```html
-<alump-dbar values="[34,66]" class="alump-shade" style="width: 100%; max-width: 300px">
+<alump-dbar values="[34,66]" class="alump-shade alump-r20" style="width: 100%;">
 </alump-dbar>
 ```
 
