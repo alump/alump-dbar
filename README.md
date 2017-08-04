@@ -1,5 +1,7 @@
 # \<alump-dbar\>
 
+[![Build Status](https://travis-ci.org/alump/alump-dbar.svg?branch=master)](https://travis-ci.org/alump/alump-dbar)
+
 Distribution Bar for Polymer 2
 
 ## Install the Polymer-CLI
