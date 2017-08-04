@@ -5,13 +5,30 @@
 
 Distribution Bar for Polymer 2
 
-## Install the Polymer-CLI
+## Examples
 
-First, make sure you have the [Polymer CLI](https://www.npmjs.com/package/polymer-cli) installed. Then run `polymer serve` to serve your element locally.
+<!--
+```
+<custom-element-demo>
+  <template>
+    <link rel="import" href="alump-dbar.html">
+    <next-code-block></next-code-block>
+  </template>
+</custom-element-demo>
+```
+-->
+```html
+<alump-dbar values="[34,66]" class="alump-shade" style="width: 100%; max-width: 300px">
+</alump-dbar>
+```
 
 ## Releases
 ### 0.1.0 (2017-08-04)
 * Initial release
+
+## Install the Polymer-CLI
+
+First, make sure you have the [Polymer CLI](https://www.npmjs.com/package/polymer-cli) installed. Then run `polymer serve` to serve your element locally.
 
 ## Viewing Your Element
 
