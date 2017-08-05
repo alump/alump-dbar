@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/alump/alump-dbar.svg?branch=master)](https://travis-ci.org/alump/alump-dbar)
 [![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/alump/alump-dbar)
+[![GitHub tag](https://img.shields.io/github/tag/alump/alump-dbar.svg?style=plastic)](https://github.com/alump/alump-dbar)
+[![Bower](https://img.shields.io/bower/v/alump-dbar.svg?style=plastic)](https://bower.io/)
 
 Distribution Bar for Polymer 2
 
