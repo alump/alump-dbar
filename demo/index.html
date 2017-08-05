@@ -112,8 +112,11 @@
               outputElement.scrollTop = outputElement.scrollHeight;
             });
             document.getElementById("dbar1").itemFormatter = (item) => {
-              // Any HTML content can be given here (you might want to escape text)
-              return "" + Math.round(item.value) + " <small>" + item.text + "</small>";
+              // If you want to include HTML tags, return object with text and html versions
+              return {
+                'html': '' + Math.round(item.value) + ' <small>' + item.text + '</small>',
+                'text': Math.round(item.value) + ' ' + item.text,
+              }
             };
           });
         </script>
@@ -177,13 +180,15 @@
             values.push(Math.random() * 50);
             document.getElementById("dbar4").values = values;
           }
-          document.getElementById("dbar4").addEventListener("partclick", e => {
-            var values = document.getElementById("dbar4").values.slice();
-            // Do not remove last value
-            if (values.length > 1) {
-              values.splice(e.detail.part, 1);
-              document.getElementById("dbar4").values = values;
-            }
+          window.addEventListener("WebComponentsReady", function (e) {
+            document.getElementById("dbar4").addEventListener("partclick", e => {
+              var values = document.getElementById("dbar4").values.slice();
+              // Do not remove last value
+              if (values.length > 1) {
+                values.splice(e.detail.part, 1);
+                document.getElementById("dbar4").values = values;
+              }
+            });
           });
         </script>
       </template>
@@ -215,16 +220,58 @@
         </custom-style>
       </template>
     </demo-snippet>
+  </div>
 
-    <div class="vertical-section-container centered">
-      <h3>Usage without width property</h3>
-      <p>Total width can be also defined in CSS</p>
-      <demo-snippet>
-        <template>
-          <alump-dbar style="width: 80%;" values="[1,2,4]">
-          </alump-dbar>
-        </template>
-      </demo-snippet>
+  <div class="vertical-section-container centered">
+    <h3>Tooltips by title attributes, defining color in item formatter</h3>
+    <demo-snippet>
+      <template>
+        <alump-dbar id="election2016" values="[62984825,65853516,4489221,1457216,731788,203010]" texts='["Trump","Clinton","Johnson","Stein","McMullin","Castle"]' with-titles width="550">
+        </alump-dbar>
+        <custom-style>
+          <style is="custom-style">
+            alump-dbar#election2016 {
+              --alump-dbar-color0: #800;
+              --alump-dbar-color1: #008;
+              --alump-dbar-color2: #BB0;
+              --alump-dbar-color3: #060;
+              --alump-dbar-color4: #666;
+              --alump-dbar-color5: #606;
+              --alump-dbar-border-radius: 5px;
+            }
+          </style>
+        </custom-style>
+        <script>
+          window.addEventListener("WebComponentsReady", function (e) {
+            document.getElementById("election2016").itemFormatter = (item) => {
+              let format = {
+                'text' : item.text + ' ' + item.value.toLocaleString(),
+                'html' : item.text + ' <small>' + item.value.toLocaleString() + '</small>',
+              };
+
+              //Orange is new black... or red
+              if(item.text == 'Trump') {
+                format.color = '#B40';
+              }
+
+              return format;
+            }
+          });
+        </script>
+      </template>
+    </demo-snippet>
+  </div>
+
+  <div class="vertical-section-container centered">
+    <h3>Usage without width property</h3>
+    <p>Total width can be also defined in CSS</p>
+    <demo-snippet>
+      <template>
+        <alump-dbar style="width: 80%;" values="[1,2,4]">
+        </alump-dbar>
+      </template>
+    </demo-snippet>
+  </div>
 </body>
 
 </html>

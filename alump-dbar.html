@@ -232,14 +232,26 @@ Example:
             type: Function,
             value: (item) => {
               return (item) => {
+                let raw = Math.round(item.value);
                 if (item.text) {
-                  return item.text;
-                } else {
-                  return Math.round(item.value);
+                  raw = item.text;
                 }
+                return {
+                  text: raw,
+                  html: raw,
+                };
               };
             },
             observer: '_itemFormatterChanged',
+          },
+
+          /**
+           * If title attributes will be generated (tooltips)
+           */ 
+          withTitles: {
+            type: Boolean,
+            value: false,
+            observer: '_withTitlesChanged',
           },
 
           /**
@@ -287,6 +299,13 @@ Example:
        * Observer for item formatter
        */
       _itemFormatterChanged() {
+        this._scheduleRender();
+      }
+
+      /**
+       * Observer for with titles
+       */
+      _withTitlesChanged() {
         this._scheduleRender();
       }
 
@@ -367,6 +386,7 @@ Example:
 
         for (let i = 0; i < this.values.length; ++i) {
           let partElement = partsElement.children[i];
+          partElement.style.backgroundColor = null;
           let value = this.values[i] > 0 ? this.values[i] : 0;
           if (sum == 0) {
             partElement.style.width = ''
@@ -387,7 +407,33 @@ Example:
           if (this.texts && this.texts.length > i && this.texts[i]) {
             item.text = this.texts[i];
           }
-          textElement.innerHTML = this.itemFormatter(item);
+
+          let formatted = this.itemFormatter(item);
+
+          let text = item.value;
+          let html = item.value;
+
+          if (typeof(formatted) == 'object') {
+            text = formatted.text;
+            html = formatted.html;
+
+            if (formatted.color) {
+              partElement.style.backgroundColor = formatted.color;
+            }
+          } else if (typeof(formatted) == 'string') {
+            text = formatted;
+            html = formatted;
+          } else if (typeof(formatted) == 'number') {
+            text = formatted.toLocaleString();
+            html = formatted.toLocaleString();
+          }
+
+          textElement.innerHTML = html;
+          partElement.setAttribute('aria-label', text);
+
+          if (this.withTitles) {
+            partElement.setAttribute('title', text);
+          }
         }
       }
 
