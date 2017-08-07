@@ -5,12 +5,14 @@ Distribution Bar element providing presentation of value distribution
 
 Example:
 
-    <alump-dbar values="[45,55]" texts="['yes,'no']" width="300"></alump-dbar>
+    <alump-dbar values="[45,55]" width="300"></alump-dbar>
 
 @group alump Elements
 @element alump-dbar
 @demo demo/index.html
 @hero hero.svg
+@author Sami Viitanen <sami.viitanen@gmail.com>
+@license Apache-2.0
 -->
 <dom-module id="alump-dbar">
   <template>
@@ -73,56 +75,58 @@ Example:
       }
 
        :host .parts .part-0 {
-        background-color: var(--alump-dbar-color0, #060);
+        background: var(--alump-dbar-color0, #060);
       }
 
        :host .parts .part-1 {
-        background-color: var(--alump-dbar-color1, #800);
+        background: var(--alump-dbar-color1, #800);
       }
 
        :host .parts .part-2 {
-        background-color: var(--alump-dbar-color2, #008);
+        background: var(--alump-dbar-color2, #008);
       }
 
        :host .parts .part-3 {
-        background-color: var(--alump-dbar-color3, #660);
+        background: var(--alump-dbar-color3, #660);
       }
 
        :host .parts .part-4 {
-        background-color: var(--alump-dbar-color4, #066);
+        background: var(--alump-dbar-color4, #066);
       }
 
        :host .parts .part-5 {
-        background-color: var(--alump-dbar-color5, #606);
+        background: var(--alump-dbar-color5, #606);
       }
 
        :host .parts .part-6 {
-        background-color: var(--alump-dbar-color6, #060);
+        background: var(--alump-dbar-color6, #060);
       }
 
        :host .parts .part-7 {
-        background-color: var(--alump-dbar-color7, #800);
+        background: var(--alump-dbar-color7, #800);
       }
 
        :host .parts .part-8 {
-        background-color: var(--alump-dbar-color8, #008);
+        background: var(--alump-dbar-color8, #008);
       }
 
        :host .parts .part-9 {
-        background-color: var(--alump-dbar-color9, #660);
+        background: var(--alump-dbar-color9, #660);
       }
 
        :host .parts .part-10 {
-        background-color: var(--alump-dbar-color10, #066);
+        background: var(--alump-dbar-color10, #066);
       }
 
        :host .parts .part-11 {
-        background-color: var(--alump-dbar-color11, #606);
+        background: var(--alump-dbar-color11, #606);
       }
 
        :host .parts .part .text {
         display: inline-block;
         width: 100%;
+        font-size: var(--alump-dbar-font-size, inherit);
+        font-family: var(--alump-dbar-font-family, inherit);
         color: var(--alump-dbar-text-color, white);
         overflow: hidden;
         text-overflow: ellipsis;
@@ -131,6 +135,7 @@ Example:
         pointer-events: none;
         vertical-align: middle;
         text-align: var(--alump-dbar-text-align, left);
+        text-shadow: var(--alump-dbar-text-shadow, none);
       }
 
       :host(.alump-shade) .parts .part .text {
@@ -191,7 +196,7 @@ Example:
       static get properties() {
         return {
           /**
-            * Values of parts
+            * Values of parts, array of positive numbers
             */
           values: {
             type: Array,
@@ -199,7 +204,7 @@ Example:
             observer: '_valuesChanged',
           },
           /**
-          * Array of texts shown in parts. If undefined values are shown instead.
+          * Textual presentation of parts, array of strings
           */
           texts: {
             type: Array,
@@ -208,7 +213,7 @@ Example:
           },
 
           /**
-          * Width of bar in pixels
+          * Total width of distribution bar in pixels (alternative to CSS sizing)
           */
           width: {
             type: Number,
@@ -217,7 +222,7 @@ Example:
           },
 
           /**
-          * Minimum width of part in pixels
+          * Minimum width of parts in pixels
           */
           minPartWidth: {
             type: Number,
@@ -226,7 +231,12 @@ Example:
           },
 
           /**
-          * Formatter method used to generate inner HTML for item
+          * Formatter method used to generate inner HTML for item. Function
+          * will receive item object with index, value and optional text. And
+          * function should return back either number, string (plain text) or
+          * object with 'text' (plain text) and html (optional html formatted
+          * presentation) variables. Object can also contain color variable,
+          * that will override the color in CSS.
           */
           itemFormatter: {
             type: Function,
@@ -246,7 +256,8 @@ Example:
           },
 
           /**
-           * If title attributes will be generated (tooltips)
+           * If title attributes will be generated (tooltips). True to
+           * enable title attributes.
            */ 
           withTitles: {
             type: Boolean,
@@ -255,7 +266,7 @@ Example:
           },
 
           /**
-          * Get number of parts defined
+          * Get number of values currently defined
           */
           partCount: {
             type: Number,
@@ -266,7 +277,7 @@ Example:
           /**
           * Get sum of all values
           */
-          valuesum: {
+          valueSum: {
             type: Number,
             readOnly: true,
             computed: '_computeValueSum()',
@@ -278,43 +289,46 @@ Example:
        * Observer for values
        */
       _valuesChanged() {
-        this._scheduleRender();
+        this.update();
       }
 
       /**
        * Observer for width
        */
       _widthChanged() {
-        this._scheduleRender();
+        this.update();
       }
 
       /**
        * Observer for minimal part width
        */
       _minPartWidthChanged() {
-        this._scheduleRender();
+        this.update();
       }
 
       /**
        * Observer for item formatter
        */
       _itemFormatterChanged() {
-        this._scheduleRender();
+        this.update();
       }
 
       /**
        * Observer for with titles
        */
       _withTitlesChanged() {
-        this._scheduleRender();
+        this.update();
       }
 
       /**
-       * Private will schedule render
+       * Ask element to re-render it's content. Usually there should not
+       * need to call this manually. Will schedule re-render before next
+       * animation frame.
        */
-      _scheduleRender() {
+      update() {
         if (Polymer.Debouncer) {
-          this._renderDebouncer = Polymer.Debouncer.debounce(this._renderDebouncer,
+          this._renderDebouncer = Polymer.Debouncer.debounce(
+            this._renderDebouncer,
             Polymer.Async.animationFrame, () => {
               this._render();
             });
@@ -418,7 +432,7 @@ Example:
             html = formatted.html;
 
             if (formatted.color) {
-              partElement.style.backgroundColor = formatted.color;
+              partElement.style.background = formatted.color;
             }
           } else if (typeof(formatted) == 'string') {
             text = formatted;

@@ -131,9 +131,12 @@
         <alump-dbar id="dbar7" values="[23,13,55,34]" width="550" min-part-width="30"
           class="alump-r20">
         </alump-dbar>
+        <alump-dbar id="time" values="[12,0,0]" width="550" min-part-width="40"
+          class="alump-r20">
+        </alump-dbar>
         <custom-style>
           <style is="custom-style">
-            alump-dbar#dbar7 {
+            alump-dbar#dbar7, alump-dbar#time {
               --alump-dbar-animation-duration: 0.8s;
               --alump-dbar-border-style: groove;
               --alump-dbar-border-color: rgba(255,255,255,0.5);
@@ -143,16 +146,24 @@
         </custom-style>
         <script>
           function timedShuffle() {
-            let dbar = document.getElementById("dbar7");
-            let values = dbar.values.slice();
-            for(let i = 0; i < values.length; ++i) {
-              values[i] = Math.round(Math.random() * 60);
+            let time = document.getElementById("time");
+            let date = new Date();
+            time.values = [ date.getHours(), date.getMinutes(), date.getSeconds() ];
+
+            // Just update every second time
+            if(date.getSeconds() % 2 == 0) {
+              let dbar = document.getElementById("dbar7");
+              let values = dbar.values.slice();
+              for(let i = 0; i < values.length; ++i) {
+                values[i] = Math.round(Math.random() * 60);
+              }
+              dbar.values = values;
             }
-            dbar.values = values;
-            setTimeout(timedShuffle, 2000);
+
+            setTimeout(timedShuffle, 1000);
           }
           window.addEventListener("WebComponentsReady", function (e) {
-            setTimeout(timedShuffle, 2000);
+            setTimeout(timedShuffle, 1000);
           });
         </script>
       </template>
@@ -199,22 +210,24 @@
     <h3>Custom styling</h3>
     <demo-snippet>
       <template>
-        <alump-dbar class="gray-scale" values="[2,6,4,3]" width="500">
+        <alump-dbar id="styled" values="[1,9,9,5]" width="500">
         </alump-dbar>
         <custom-style>
           <style is="custom-style">
-            alump-dbar.gray-scale {
-              --alump-dbar-border-width: 1px;
+            alump-dbar#styled {
+              --alump-dbar-border-width: 2px;
               --alump-dbar-border-style: solid;
               --alump-dbar-border-color: #888;
-              --alump-dbar-text-color: black;
-              --alump-dbar-text-shadow: 0px 0px 2px rgba(255, 255, 255, 0.5);
-              --alump-dbar-color0: #DDD;
-              --alump-dbar-color1: #FFF;
-              --alump-dbar-color2: #DDD;
-              --alump-dbar-color3: #FFF;
-              --alump-dbar-border-radius: 20px;
+              --alump-dbar-text-color: #333;
+              --alump-dbar-text-shadow: -1px -1px 1px #FFF, 1px 1px 1px #FFF;
+              --alump-dbar-color0: linear-gradient(to bottom, #ebf1f6 0%,#abd3ee 50%,#89c3eb 51%,#d5ebfb 100%);
+              --alump-dbar-color1: linear-gradient(to bottom, #fceabb 0%,#fccd4d 50%,#f8b500 51%,#fbdf93 100%);
+              --alump-dbar-color2: linear-gradient(to bottom, #ebf1f6 0%,#abd3ee 50%,#89c3eb 51%,#d5ebfb 100%);
+              --alump-dbar-color3: linear-gradient(to bottom, #fceabb 0%,#fccd4d 50%,#f8b500 51%,#fbdf93 100%);
+              --alump-dbar-border-radius: 30px;
               --alump-dbar-text-align: center;
+              --alump-dbar-font-size: 26px;
+              --alump-dbar-font-family: "Comic Sans MS", cursive, sans-serif;
             }
           </style>
         </custom-style>
@@ -264,7 +277,7 @@
 
   <div class="vertical-section-container centered">
     <h3>Usage without width property</h3>
-    <p>Total width can be also defined in CSS</p>
+    <p>Total width can be also defined in CSS. But width needs to be defined to allow width calculations.</p>
     <demo-snippet>
       <template>
         <alump-dbar style="width: 80%;" values="[1,2,4]">
