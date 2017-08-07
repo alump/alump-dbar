@@ -26,14 +26,14 @@
 ```
 
 ## Releases
-### 0.1.2 (TBD)
-* aria-label attributes generated now
+### 0.1.2 (2017-08-07)
+* aria-label and aria-valuenow attributes are now generated for items
 * Item formatted can now return number, string or object (with 'text' and 'html' values). Object to be used when HTML coding is used.
 * Color of items can be now be defined in itemFormatter (will override theming colors when defined)
 * Using now background CSS property on items, to allow gradients and images
 * Fix naming of valuesum to valueSum
 * --alump-dbar-font-size and --alump-dbar-font-family custom styling properties added
-* Fix --alump-dbar-text-shadow
+* Fix --alump-dbar-text-shadow to always apply when defined
 * Make update (schedule render) function public, usually there should not be need to call this
 ### 0.1.1 (2017-08-04)
 * Fixing project metadata to improve presentation at webcomponents.org
