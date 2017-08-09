@@ -20,7 +20,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "polymer": "Polymer/polymer#^2.0.0",
-    "iron-resizable-behavior": "iron-resizable-behavior#^2.0.0"
+    "iron-resizable-behavior": "PolymerElements/iron-resizable-behavior#^v2.0.0"
   },
   "devDependencies": {
     "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^2.0.0",
