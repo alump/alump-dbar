@@ -25,12 +25,24 @@
 </alump-dbar>
 ```
 
-### Or same with width attribute (width of bar can not be undefined):
+### Width in pixels can be also defined with width attribute (width can not be left undefined):
 
 ```html
 <alump-dbar values="[34,66]" class="alump-shade alump-r20" width="300">
 </alump-dbar>
 ```
+
+## Usage
+First install dependency to your project with bower
+```
+bower install alump-dbar
+```
+Then link to element from your Polymer html file
+```html
+<link rel="import" href="../alump-dbar/alump-dbar.html">
+```
+After this you can just add example above to your HTML file
+
 
 ## Releases
 ### 0.1.3 (2017-08-09)
