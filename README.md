@@ -25,6 +25,13 @@
 </alump-dbar>
 ```
 
+### Or same with width attribute (width of bar can not be undefined):
+
+```html
+<alump-dbar values="[34,66]" class="alump-shade alump-r20" width="300">
+</alump-dbar>
+```
+
 ## Releases
 ### 0.1.3 (2017-08-09)
 * Element will now automatically resize itself if size is changed because relative size to it's parent
