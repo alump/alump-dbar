@@ -33,13 +33,13 @@
 ```
 
 ## Usage
-First install dependency to your project with bower
+First install dependency to your (Polymer) project with Bower
 ```
 bower install alump-dbar
 ```
-Then link to element from your Polymer html file
+Then link to element from your Polymer html file (your relative path might be different)
 ```html
-<link rel="import" href="../alump-dbar/alump-dbar.html">
+<link rel="import" href="../bower_components/alump-dbar/alump-dbar.html">
 ```
 After this you can just add example above to your HTML file
 
