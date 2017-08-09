@@ -1,4 +1,5 @@
 <link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html">
 
 <!--
 Distribution Bar element providing presentation of value distribution
@@ -6,6 +7,12 @@ Distribution Bar element providing presentation of value distribution
 Example:
 
     <alump-dbar values="[45,55]" width="300"></alump-dbar>
+
+Or same with CSS width:
+
+    <alump-dbar values="[45,55]" style="width: 300px;"></alump-dbar>
+
+Always define the width of bar!
 
 @group alump Elements
 @element alump-dbar
@@ -181,7 +188,8 @@ Example:
      * @polymer
      * @demo demo/index.html
      */
-    class AlumpDbar extends Polymer.Element {
+    class AlumpDbar extends Polymer.mixinBehaviors(
+      [Polymer.IronResizableBehavior], Polymer.Element) {
       /**
        * Element type
        * @return {string} alump-dbar
@@ -286,6 +294,16 @@ Example:
       }
 
       /**
+      * Element ready
+      */
+      ready() {
+        super.ready();
+        this.addEventListener('iron-resize', (e) => {
+          this._barResized();
+        });
+      }
+
+      /**
        * Observer for values
        */
       _valuesChanged() {
@@ -318,6 +336,16 @@ Example:
        */
       _withTitlesChanged() {
         this.update();
+      }
+
+      /**
+       * Observer for bar resize events
+       */
+      _barResized() {
+        // Re-render if width attribute does not have valid value
+        if (null === this.width || undefined == this.width) {
+          this.update();
+        }
       }
 
       /**

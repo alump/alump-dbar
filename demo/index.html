@@ -276,14 +276,17 @@
   </div>
 
   <div class="vertical-section-container centered">
-    <h3>Usage without width property</h3>
-    <p>Total width can be also defined in CSS. But width needs to be defined to allow width calculations.</p>
-    <demo-snippet>
-      <template>
-        <alump-dbar style="width: 80%;" values="[1,2,4]">
-        </alump-dbar>
-      </template>
-    </demo-snippet>
+    <h3>(Relative) CSS based width</h3>
+    <p>Total width of bar can be also defined in CSS. Bar will update it size correctly if relative size is used and parent element size is changed. To test this change width of window.</p>
+  </div>
+
+  <div class="vertical-section-container centered" style="max-width: 80%;">
+    <demo-snippet style="width: 100%;">
+    <template>
+      <alump-dbar style="width: 100%;" values="[1,2,4,8]">
+      </alump-dbar>
+    </template>
+  </demo-snippet>
   </div>
 </body>
 

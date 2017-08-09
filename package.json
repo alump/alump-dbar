@@ -1,6 +1,6 @@
 {
   "name": "alump-dbar",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Polymer element providing distribution bar",
   "main": "alump-dbar.html",
   "repository": "alump/alump-dbar",
@@ -9,7 +9,8 @@
     "bar",
     "web-components",
     "web-component",
-    "polymer"
+    "polymer",
+    "alump"
   ],
   "author": "Sami Viitanen <sami.viitanen@vaadin.com>",
   "license": "Apache-2.0",
@@ -24,10 +25,12 @@
     "eslint": "^4.0.0",
     "eslint-config-vaadin": "latest",
     "eslint-plugin-html": "^3.1.1",
+    "eslint-config-google": "^0.9.1",
     "gulp": "^3.9.1",
     "gulp-eslint": "^4.0.0",
     "gulp-html-extract": "^0.3.0",
     "gulp-stylelint": "^3.9.0",
+    "gulp-csslint": "^1.0.0",
     "polymer-cli": "^1.3.1",
     "stylelint": "^8.0.0",
     "stylelint-config-vaadin": "^0.1.1",
@@ -35,8 +38,5 @@
     "web-component-tester": "^v6.0.0",
     "yargs": "latest"
   },
-  "dependencies": {
-    "eslint-config-google": "^0.9.1",
-    "gulp-csslint": "^1.0.0"
-  }
+  "dependencies": {}
 }

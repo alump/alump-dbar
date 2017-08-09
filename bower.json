@@ -9,7 +9,8 @@
     "web-component",
     "polymer",
     "distribution",
-    "bar"
+    "bar",
+    "alump"
   ],
   "main": "alump-dbar.html",
   "repository": {
@@ -18,7 +19,8 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "polymer": "Polymer/polymer#^2.0.0"
+    "polymer": "Polymer/polymer#^2.0.0",
+    "iron-resizable-behavior": "iron-resizable-behavior#^2.0.0"
   },
   "devDependencies": {
     "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^2.0.0",
