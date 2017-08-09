@@ -26,6 +26,8 @@
 ```
 
 ## Releases
+### 0.1.3 (TBD)
+* TDB
 ### 0.1.2 (2017-08-07)
 * aria-label and aria-valuenow attributes are now generated for items
 * Item formatted can now return number, string or object (with 'text' and 'html' values). Object to be used when HTML coding is used.
