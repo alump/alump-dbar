@@ -45,6 +45,10 @@ After this you can just add example above to your HTML file
 
 
 ## Releases
+### 0.1.4 (2018-03-09)
+* Just trying resolve webjaring SemVer issues
+* Minor code clean ups
+* Upgrading dependencies to current versions
 ### 0.1.3 (2017-08-09)
 * Element will now automatically resize itself if size is changed because relative size to it's parent
 ### 0.1.2 (2017-08-07)

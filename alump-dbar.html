@@ -197,6 +197,7 @@ Always define the width of bar!
       static get is() {
         return 'alump-dbar';
       }
+
       /**
        * Element properties
        * @return {object} properties object
@@ -343,7 +344,7 @@ Always define the width of bar!
        */
       _barResized() {
         // Re-render if width attribute does not have valid value
-        if (null === this.width || undefined == this.width) {
+        if (null === this.width || undefined === this.width) {
           this.update();
         }
       }
@@ -455,17 +456,17 @@ Always define the width of bar!
           let text = item.value;
           let html = item.value;
 
-          if (typeof(formatted) == 'object') {
+          if (typeof(formatted) === 'object') {
             text = formatted.text;
             html = formatted.html;
 
             if (formatted.color) {
               partElement.style.background = formatted.color;
             }
-          } else if (typeof(formatted) == 'string') {
+          } else if (typeof(formatted) === 'string') {
             text = formatted;
             html = formatted;
-          } else if (typeof(formatted) == 'number') {
+          } else if (typeof(formatted) === 'number') {
             text = formatted.toLocaleString();
             html = formatted.toLocaleString();
           }
