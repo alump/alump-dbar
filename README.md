@@ -45,6 +45,9 @@ After this you can just add example above to your HTML file
 
 
 ## Releases
+### 0.1.5 (2018-03-09)
+* Fixing linting error left in 0.1.4
+* Also update some development dependencies
 ### 0.1.4 (2018-03-09)
 * Just trying resolve webjaring SemVer issues
 * Minor code clean ups
