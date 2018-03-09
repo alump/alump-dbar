@@ -1,6 +1,6 @@
 {
   "name": "alump-dbar",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Polymer element providing distribution bar",
   "main": "alump-dbar.html",
   "repository": "alump/alump-dbar",
@@ -34,7 +34,7 @@
     "stylelint": "^8.0.0",
     "stylelint-config-vaadin": "^0.1.1",
     "wct-random-output": "^0.2.0",
-    "web-component-tester": "^v6.5.0",
+    "web-component-tester": "^6.5.0",
     "yargs": "latest"
   },
   "dependencies": {}
