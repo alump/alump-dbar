@@ -59,8 +59,12 @@
     <h3>With only labels</h3>
     <demo-snippet>
       <template>
-        <alump-dbar values="[8,14]" texts='["yes","no"]' width="550" min-part-width="30" class="alump-shade alump-r20">
-        </alump-dbar>
+        <alump-dbar
+          values="[8,14]"
+          texts='["yes","no"]'
+          width="550"
+          min-part-width="30"
+          class="alump-shade alump-r20"></alump-dbar>
       </template>
     </demo-snippet>
   </div>
@@ -69,22 +73,25 @@
     <h3>Multiple values, number formatting and value updates</h3>
     <demo-snippet>
       <template>
-        <alump-dbar id="dbar3" values="[3,23,1,0,12.5,7]" width="550" min-part-width="25">
-        </alump-dbar>
+        <alump-dbar
+          id="dbar3"
+          values="[3,23,1,0,12.5,7]"
+          width="550"
+          min-part-width="25"></alump-dbar>
         <button id="shuffle" onclick="shuffleDbar3()">Randomize values</button>
         <script>
-          window.addEventListener("WebComponentsReady", function (e) {
-            document.getElementById("dbar3").itemFormatter = (item) => {
+          window.addEventListener('WebComponentsReady', (e) => {
+            document.getElementById('dbar3').itemFormatter = (item) => {
               return item.value.toFixed(2);
             };
           });
-          function shuffleDbar3() {
+          function shuffleDbar3() { // eslint-disable-line
             // Slice is used to create copy of values array
-            var randomize = document.getElementById("dbar3").values.slice();
+            var randomize = document.getElementById('dbar3').values.slice();
             for (var i = 0; i < randomize.length; ++i) {
               randomize[i] = Math.random() * 25;
             }
-            document.getElementById("dbar3").values = randomize;
+            document.getElementById('dbar3').values = randomize;
           }
         </script>
       </template>
@@ -95,28 +102,39 @@
     <h3>With text, item formatter and clickhandling</h3>
     <demo-snippet>
       <template>
-        <alump-dbar id="dbar1" values="[1,2,3,4]" texts='["foo","bar","lorem ipsum","Diipa daapa juupa joo"]' width="550" min-part-width="50"
+        <alump-dbar
+          id="dbar1"
+          values="[1,2,3,4]"
+          texts='["foo","bar","lorem ipsum","Diipa daapa juupa joo"]'
+          width="550"
+          min-part-width="50"
           class="alump-clickable alump-r20">
         </alump-dbar>
         <div id="output">
           <p>Clicking events are printed here...</p>
         </div>
         <script>
-          window.addEventListener("WebComponentsReady", function (e) {
-            document.getElementById("dbar1").addEventListener("partclick", function (e) {
-              var outputElement = document.getElementById("output");
-              var text = e.detail.text ? e.detail.text : e.detail.value;
-              var msg = 'Part #' + e.detail.part + ' "' + e.detail.text + "' (" + e.detail.value + ") clicked at " + e.detail.event.x + ":" + e.detail.event.y;
-              outputElement.style.display = "block";
-              outputElement.innerHTML = outputElement.innerHTML + "<p>" + msg + "</p>";
-              outputElement.scrollTop = outputElement.scrollHeight;
-            });
-            document.getElementById("dbar1").itemFormatter = (item) => {
-              // If you want to include HTML tags, return object with text and html versions
+          window.addEventListener('WebComponentsReady', (e) => {
+            document.getElementById('dbar1').addEventListener('partclick',
+              (e) => {
+                var outputElement = document.getElementById('output');
+                // var text = e.detail.text ? e.detail.text : e.detail.value;
+                var msg = 'Part #' + e.detail.part + ' "' + e.detail.text
+                  + '" (' + e.detail.value + ') clicked at '
+                  + e.detail.event.x + ':' + e.detail.event.y;
+                outputElement.style.display = 'block';
+                outputElement.innerHTML = outputElement.innerHTML
+                  + '<p>' + msg + '</p>';
+                outputElement.scrollTop = outputElement.scrollHeight;
+              });
+            document.getElementById('dbar1').itemFormatter = (item) => {
+              // If you want to include HTML tags, return object with text
+              // and html versions
               return {
-                'html': '' + Math.round(item.value) + ' <small>' + item.text + '</small>',
+                'html': '' + Math.round(item.value)
+                  + ' <small>' + item.text + '</small>',
                 'text': Math.round(item.value) + ' ' + item.text,
-              }
+              };
             };
           });
         </script>
@@ -146,15 +164,15 @@
         </custom-style>
         <script>
           function timedShuffle() {
-            let time = document.getElementById("time");
+            let time = document.getElementById('time');
             let date = new Date();
-            time.values = [ date.getHours(), date.getMinutes(), date.getSeconds() ];
+            time.values = [date.getHours(), date.getMinutes(), date.getSeconds()];
 
             // Just update every second time
-            if(date.getSeconds() % 2 == 0) {
-              let dbar = document.getElementById("dbar7");
+            if (date.getSeconds() % 2 == 0) {
+              let dbar = document.getElementById('dbar7');
               let values = dbar.values.slice();
-              for(let i = 0; i < values.length; ++i) {
+              for (let i = 0; i < values.length; ++i) {
                 values[i] = Math.round(Math.random() * 60);
               }
               dbar.values = values;
@@ -162,7 +180,7 @@
 
             setTimeout(timedShuffle, 1000);
           }
-          window.addEventListener("WebComponentsReady", function (e) {
+          window.addEventListener('WebComponentsReady', (e) => {
             setTimeout(timedShuffle, 1000);
           });
         </script>
@@ -175,8 +193,12 @@
     <p>Remove value by clicking, add new value with button.</p>
     <demo-snippet>
       <template>
-        <alump-dbar id="dbar4" values="[10,20]" width="550" min-part-width="20" class="alump-clickable alump-r10">
-        </alump-dbar>
+        <alump-dbar
+          id="dbar4"
+          values="[10,20]"
+          width="550"
+          min-part-width="20"
+          class="alump-clickable alump-r10"></alump-dbar>
         <button id="addValue" onclick="addValue()">Add value</button>
         <custom-style>
           <style is="custom-style">
@@ -186,18 +208,18 @@
           </style>
         </custom-style>
         <script>
-          function addValue() {
-            var values = document.getElementById("dbar4").values.slice();
+          function addValue() { // eslint-disable-line
+            var values = document.getElementById('dbar4').values.slice();
             values.push(Math.random() * 50);
-            document.getElementById("dbar4").values = values;
+            document.getElementById('dbar4').values = values;
           }
-          window.addEventListener("WebComponentsReady", function (e) {
-            document.getElementById("dbar4").addEventListener("partclick", e => {
-              var values = document.getElementById("dbar4").values.slice();
+          window.addEventListener('WebComponentsReady', (e) => {
+            document.getElementById('dbar4').addEventListener('partclick', (e) => {
+              var values = document.getElementById('dbar4').values.slice();
               // Do not remove last value
               if (values.length > 1) {
                 values.splice(e.detail.part, 1);
-                document.getElementById("dbar4").values = values;
+                document.getElementById('dbar4').values = values;
               }
             });
           });
@@ -239,8 +261,11 @@
     <h3>Tooltips by title attributes, defining color in item formatter</h3>
     <demo-snippet>
       <template>
-        <alump-dbar id="election2016" values="[62984825,65853516,4489221,1457216,731788,203010]" texts='["Trump","Clinton","Johnson","Stein","McMullin","Castle"]' with-titles width="550">
-        </alump-dbar>
+        <alump-dbar
+          id="election2016"
+          values="[62984825,65853516,4489221,1457216,731788,203010]"
+          texts='["Trump","Clinton","Johnson","Stein","McMullin","Castle"]'
+          with-titles width="550"></alump-dbar>
         <custom-style>
           <style is="custom-style">
             alump-dbar#election2016 {
@@ -255,20 +280,20 @@
           </style>
         </custom-style>
         <script>
-          window.addEventListener("WebComponentsReady", function (e) {
-            document.getElementById("election2016").itemFormatter = (item) => {
+          window.addEventListener('WebComponentsReady', (e) => {
+            document.getElementById('election2016').itemFormatter = (item) => {
               let format = {
-                'text' : item.text + ' ' + item.value.toLocaleString(),
-                'html' : item.text + ' <small>' + item.value.toLocaleString() + '</small>',
+                'text': item.text + ' ' + item.value.toLocaleString(),
+                'html': item.text + ' <small>' + item.value.toLocaleString() + '</small>',
               };
 
-              //Orange is new black... or red
-              if(item.text == 'Trump') {
+              // Orange is new black... or red
+              if (item.text == 'Trump') {
                 format.color = '#B40';
               }
 
               return format;
-            }
+            };
           });
         </script>
       </template>
@@ -277,7 +302,9 @@
 
   <div class="vertical-section-container centered">
     <h3>(Relative) CSS based width</h3>
-    <p>Total width of bar can be also defined in CSS. Bar will update it size correctly if relative size is used and parent element size is changed. To test this change width of window.</p>
+    <p>Total width of bar can be also defined in CSS. Bar will update it size
+      correctly if relative size is used and parent element size is changed.
+      To test this change width of window.</p>
   </div>
 
   <div class="vertical-section-container centered" style="max-width: 80%;">

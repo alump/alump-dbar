@@ -1,5 +1,6 @@
 {
   "name": "alump-dbar",
+  "homepage": "https://github.com/alump/alump-dbar",
   "description": "Distribution Bar",
   "authors": [
     "Sami Viitanen <sami.viitanen@vaadin.com>"
@@ -19,15 +20,16 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "polymer": "Polymer/polymer#^2.4.0",
-    "iron-resizable-behavior": "PolymerElements/iron-resizable-behavior#^2.0.1"
+    "polymer": "^2.0.0",
+    "iron-resizable-behavior": "^2.0.0"
   },
   "devDependencies": {
     "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^2.0.0",
-    "web-component-tester": "Polymer/web-component-tester#^6.5.0",
+    "web-component-tester": "Polymer/web-component-tester#^6.1.5",
     "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0"
   },
   "resolutions": {
-    "polymer": "^2.4.0"
+    "polymer": "^2.5.0",
+    "webcomponentsjs": "^1.0.0"
   }
 }

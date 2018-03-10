@@ -8,6 +8,17 @@
 
 [Online demo at webcomponents.org](https://www.webcomponents.org/element/alump/alump-dbar/demo/demo/index.html)
 
+
+### WebJar Maven dependency (Vaadin 10)
+When this works, if it works, you can pull webjar with:
+```xml
+<dependency>
+    <groupId>org.webjars.bowergithub.alump</groupId>
+    <artifactId>alump-dbar</artifactId>
+    <version>0.1.7</version>
+</dependency>
+```
+
 ## Examples
 
 <!--
@@ -45,6 +56,8 @@ After this you can just add example above to your HTML file
 
 
 ## Releases
+### 0.2.0-alpha1 (2018-03-09)
+* Moved to alphas to try to figure out how to get webjars generated correctly
 ### 0.1.6 (2018-03-09)
 * Finally found the actual SemVer issue breaking webjaring, I hope.
 ### 0.1.5 (2018-03-09)
