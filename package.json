@@ -1,6 +1,6 @@
 {
   "name": "alump-dbar",
-  "version": "0.1.7",
+  "version": "0.2.0-alpha1",
   "description": "Polymer element providing distribution bar",
   "main": "alump-dbar.html",
   "directories": {
