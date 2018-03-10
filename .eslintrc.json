@@ -1,6 +1,6 @@
 
 {
-  "extends": ["eslint:recommended", "google"],
+  "extends": "vaadin",
   "parserOptions": {
     "ecmaVersion": 6
   },
@@ -14,7 +14,6 @@
   ],
   "rules": {
     "brace-style": "off",
-    "new-cap": ["error", { "capIsNewExceptions": ["Polymer"] }],
     "no-var": "off",
     "require-jsdoc": "off"
   },
@@ -22,6 +21,9 @@
     "CustomElements": false,
     "HTMLImports": false,
     "Polymer": true,
-    "WeakMap": false
+    "WeakMap": false,
+    "Vaadin": false,
+    "Alump": false,
+    "DBarElement": false
   }
 }

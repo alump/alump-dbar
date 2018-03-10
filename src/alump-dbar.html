@@ -1,0 +1,579 @@
+<link rel="import" href="../../polymer/polymer-element.html">
+<link rel="import" href="../../iron-resizable-behavior/iron-resizable-behavior.html">
+<link rel="import" href="../../vaadin-themable-mixin/vaadin-themable-mixin.html">
+<link rel="import" href="../../vaadin-element-mixin/vaadin-element-mixin.html">
+
+<!--
+Distribution Bar element providing presentation of value distribution
+
+Example:
+
+    <alump-dbar values="[45,55]" width="300"></alump-dbar>
+
+Or same with CSS width:
+
+    <alump-dbar values="[45,55]" style="width: 300px;"></alump-dbar>
+
+Always define the width of bar!
+
+@group alump Elements
+@element alump-dbar
+@demo demo/index.html
+@hero hero.svg
+@author Sami Viitanen <sami.viitanen@gmail.com>
+@license Apache-2.0
+-->
+<dom-module id="alump-dbar">
+  <template>
+    <style>
+       :host {
+        display: block;
+        user-select: none;
+        box-sizing: border-box;
+        padding: var(--alump-dbar-padding, 3px);
+        overflow: hidden;
+      }
+
+      :host(.alump-r10) {
+        --alump-dbar-border-radius: 10px;
+      }
+
+      :host(.alump-r20) {
+        --alump-dbar-border-radius: 20px;
+      }
+
+      [part="label"] {
+        line-height: 1;
+        font-size: var(--alump-dbar-label-font-size, inherit);
+        color: var(--alump-dbar-label-color, inherit);
+        font-family: var(--alump-dbar-label-font-family, inherit);
+        padding-bottom: var(--alump-dbar-label-spacing, 0.5em);
+        padding-left: calc(var(--alump-dbar-border-radius, 0px) / 4);
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        position: relative;
+        max-width: 100%;
+        box-sizing: border-box;
+      }
+
+      :host([has-label]) [part="label"] {
+        display: block;
+      }
+
+      :host(.alump-shade) {
+        --alump-dbar-border-style: groove;
+        --alump-dbar-border-width: 2px;
+        --alump-dbar-border-color: rgba(255, 255, 255, 0.3);
+        --alump-dbar-text-color: rgba(255, 255, 255, 0.9);
+      }
+
+       :host .parts {
+        overflow: visible;
+        white-space: nowrap;
+        box-sizing: border-box;
+      }
+
+      :host(.alump-shade) .parts .part {
+        box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.5), 0px 15px 5px rgba(255, 255, 255, 0.1) inset, 0px -10px 5px rgba(0, 0, 0, 0.05) inset;
+      }
+
+       :host .parts .part {
+        display: inline-block;
+        background-color: gray;
+        margin: 0px;
+        padding: 0.25em 10px;
+        position: relative;
+        box-sizing: border-box;
+        border-width: var(--alump-dbar-border-width, none) 0px var(--alump-dbar-border-width, none) 0px;
+        border-style: var(--alump-dbar-border-style, none);
+        border-color: var(--alump-dbar-border-color, transparent);
+      }
+
+       :host(.alump-clickable) .parts .part {
+        cursor: pointer;
+      }
+
+      :host(.alump-clickable) .parts .part:active {
+        -webkit-filter: brightness(0.5);
+        filter: brightness(0.5);
+      }
+
+       :host(.alump-shade.alump-clickable) .parts .part:hover {
+        box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.5), 0px 15px 5px rgba(255, 255, 255, 0.3) inset, 0px -10px 5px rgba(0, 0, 0, 0.2) inset;
+      }
+
+       :host .parts .part-0 {
+        background: var(--alump-dbar-color0, #060);
+      }
+
+       :host .parts .part-1 {
+        background: var(--alump-dbar-color1, #800);
+      }
+
+       :host .parts .part-2 {
+        background: var(--alump-dbar-color2, #008);
+      }
+
+       :host .parts .part-3 {
+        background: var(--alump-dbar-color3, #660);
+      }
+
+       :host .parts .part-4 {
+        background: var(--alump-dbar-color4, #066);
+      }
+
+       :host .parts .part-5 {
+        background: var(--alump-dbar-color5, #606);
+      }
+
+       :host .parts .part-6 {
+        background: var(--alump-dbar-color6, #060);
+      }
+
+       :host .parts .part-7 {
+        background: var(--alump-dbar-color7, #800);
+      }
+
+       :host .parts .part-8 {
+        background: var(--alump-dbar-color8, #008);
+      }
+
+       :host .parts .part-9 {
+        background: var(--alump-dbar-color9, #660);
+      }
+
+       :host .parts .part-10 {
+        background: var(--alump-dbar-color10, #066);
+      }
+
+       :host .parts .part-11 {
+        background: var(--alump-dbar-color11, #606);
+      }
+
+       :host .parts .part .text {
+        display: inline-block;
+        width: 100%;
+        font-size: var(--alump-dbar-font-size, inherit);
+        font-family: var(--alump-dbar-font-family, inherit);
+        color: var(--alump-dbar-text-color, white);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        cursor: default;
+        pointer-events: none;
+        vertical-align: middle;
+        text-align: var(--alump-dbar-text-align, left);
+        text-shadow: var(--alump-dbar-text-shadow, none);
+      }
+
+      :host(.alump-shade) .parts .part .text {
+        text-shadow: var(--alump-dbar-text-shadow, 0px 0px 2px rgba(0, 0, 0, 0.5));
+      }
+
+      :host .parts .part:first-child {
+        border-left-width: var(--alump-dbar-border-width, none);
+      }
+
+      :host .parts .part:last-child {
+        border-right-width: var(--alump-dbar-border-width, none);
+      }
+
+       :host .parts .part:first-child {
+        border-top-left-radius: var(--alump-dbar-border-radius, 0px);
+        border-bottom-left-radius: var(--alump-dbar-border-radius, 0px);
+      }
+
+       :host .parts .part:last-child {
+        border-top-right-radius: var(--alump-dbar-border-radius, 0px);
+        border-bottom-right-radius: var(--alump-dbar-border-radius, 0px);
+      }
+
+       :host(.alump-r20) .parts .part {
+        padding-left: 15px;
+      }
+
+       :host .parts .part {
+        transition: width var(--alump-dbar-animation-duration, 0.5s) linear;
+        -webkit-transition: width var(--alump-dbar-animation-duration, 0.5s) linear;
+      }
+    </style>
+
+    <label part="label" on-click="focus" id="[[_labelId]]">[[label]]</label>
+    <div class="parts"></div>
+  </template>
+
+  <script>
+
+    window.Alump = window.Alump || {};
+
+    /**
+     * `alump-dbar`
+     * Distribution Bar
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class DbarElement extends Polymer.mixinBehaviors(
+      [Polymer.IronResizableBehavior],
+      Vaadin.ElementMixin(Vaadin.ThemableMixin(Polymer.Element))) {
+
+      /**
+       * Element type
+       * @return {string} alump-dbar
+       */
+      static get is() {
+        return 'alump-dbar';
+      }
+
+      /**
+       * Element version
+       * @return {string} version
+       */
+      static get version() {
+        return '0.2.0-alpha2';
+      }
+
+      /**
+       * Element properties
+       * @return {object} properties object
+       */
+      static get properties() {
+        return {
+          /**
+            * Values of parts, array of positive numbers
+            */
+          values: {
+            type: Array,
+            value: [0],
+            observer: '_valuesChanged',
+          },
+          /**
+          * Textual presentation of parts, array of strings
+          */
+          texts: {
+            type: Array,
+            value: undefined,
+            observer: '_valuesChanged',
+          },
+
+          /**
+          * Total width of distribution bar in pixels (alternative to CSS sizing)
+          */
+          width: {
+            type: Number,
+            value: null,
+            observer: '_widthChanged',
+          },
+
+          /**
+          * Minimum width of parts in pixels
+          */
+          minPartWidth: {
+            type: Number,
+            value: 40,
+            observer: '_minPartWidthChanged',
+          },
+
+          /**
+          * Formatter method used to generate inner HTML for item. Function
+          * will receive item object with index, value and optional text. And
+          * function should return back either number, string (plain text) or
+          * object with 'text' (plain text) and html (optional html formatted
+          * presentation) variables. Object can also contain color variable,
+          * that will override the color in CSS.
+          */
+          itemFormatter: {
+            type: Function,
+            value: (item) => {
+              return (item) => {
+                let raw = Math.round(item.value);
+                if (item.text) {
+                  raw = item.text;
+                }
+                return {
+                  text: raw,
+                  html: raw,
+                };
+              };
+            },
+            observer: '_itemFormatterChanged',
+          },
+
+          /**
+           * If title attributes will be generated (tooltips). True to
+           * enable title attributes.
+           */
+          withTitles: {
+            type: Boolean,
+            value: false,
+            observer: '_withTitlesChanged',
+          },
+
+          /**
+          * Get number of values currently defined
+          */
+          partCount: {
+            type: Number,
+            readOnly: true,
+            computed: '_computePartCount()',
+          },
+
+          /**
+          * Get sum of all values
+          */
+          valueSum: {
+            type: Number,
+            readOnly: true,
+            computed: '_computeValueSum()',
+          },
+
+          /**
+           * String used for the label element.
+           */
+          label: {
+            type: String,
+            value: '',
+            observer: '_labelChanged'
+          },
+
+          _labelId: {
+            type: String
+          },
+        };
+      }
+
+      /**
+      * Element ready
+      */
+      ready() {
+        super.ready();
+
+        const uniqueId = window.Alump._uniqueId = 1 + window.Alump._uniqueId || 0;
+        this._labelId = `${this.constructor.is}-label-${uniqueId}`;
+
+        this.addEventListener('iron-resize', (e) => {
+          this._barResized();
+        });
+      }
+
+      /**
+       * Observer for values
+       */
+      _valuesChanged() {
+        this.update();
+      }
+
+      /**
+       * Observer for width
+       */
+      _widthChanged() {
+        this.update();
+      }
+
+      /**
+       * Observer for minimal part width
+       */
+      _minPartWidthChanged() {
+        this.update();
+      }
+
+      /**
+       * Observer for item formatter
+       */
+      _itemFormatterChanged() {
+        this.update();
+      }
+
+      /**
+       * Observer for with titles
+       */
+      _withTitlesChanged() {
+        this.update();
+      }
+
+      _labelChanged(label) {
+        if (label !== '' && label != null) {
+          this.setAttribute('has-label', '');
+        } else {
+          this.removeAttribute('has-label');
+        }
+      }
+
+      /**
+       * Observer for bar resize events
+       */
+      _barResized() {
+        // Re-render if width attribute does not have valid value
+        if (null === this.width || undefined === this.width) {
+          this.update();
+        }
+      }
+
+      /**
+       * Ask element to re-render it's content. Usually there should not
+       * need to call this manually. Will schedule re-render before next
+       * animation frame.
+       */
+      update() {
+        if (Polymer.Debouncer) {
+          this._renderDebouncer = Polymer.Debouncer.debounce(
+            this._renderDebouncer,
+            Polymer.Async.animationFrame, () => {
+              this._render();
+            });
+        } else {
+          this._render();
+        }
+      }
+
+      /**
+       * Private compute amout of values
+       * @return {number} Amount of values
+       */
+      _computePartCount() {
+        if (this.values) {
+          return this.values.length;
+        } else {
+          return 0;
+        }
+      }
+
+      /**
+       * Private compute total sum of values
+       * @return {number} Sum of values
+       */
+      _computeValueSum() {
+        let sum = 0;
+        if (this.values) {
+          for (let i = 0; i < this.values.length; ++i) {
+            const val = this.values[i];
+            if (!isNaN(val) && val >= 0) {
+              sum += val;
+            }
+          }
+        }
+        return sum;
+      }
+
+      /**
+       * Protected render function, should be called via update
+       */
+      _render() {
+        const partsElement = this.shadowRoot.querySelector('.parts');
+        for (let i = partsElement.children.length; i < this.values.length; ++i) {
+          const partElement = document.createElement('div');
+          partElement.setAttribute('class', 'part part-' + i);
+          partElement.addEventListener('click', function(e) {
+            this._handlePartClick(e);
+          }.bind(this));
+          const textElement = document.createElement('div');
+          textElement.setAttribute('class', 'text');
+          partElement.appendChild(textElement);
+          partsElement.appendChild(partElement);
+        }
+        while (partsElement.children.length > this.values.length) {
+          const index = partsElement.children.length - 1;
+          partsElement.removeChild(partsElement.children[index]);
+        }
+
+        const sum = this._computeValueSum();
+        let pixelValue = 0;
+        let myWidth = this.width;
+        if (myWidth == null) {
+          myWidth = partsElement.clientWidth;
+        }
+        if (sum != 0) {
+          const availableSpace = myWidth - this.minPartWidth * this.values.length;
+          pixelValue = availableSpace / sum;
+        }
+
+        for (let i = 0; i < this.values.length; ++i) {
+          const partElement = partsElement.children[i];
+          partElement.style.backgroundColor = null;
+          const value = this.values[i] > 0 ? this.values[i] : 0;
+          if (sum == 0) {
+            partElement.style.width = ''
+              + (this.width / this.values.length)
+              + 'px';
+          } else {
+            partElement.style.width = ''
+              + (this.minPartWidth + value * pixelValue)
+              + 'px';
+          }
+
+          const textElement = partElement.querySelector('.text');
+
+          const item = {
+            index: i,
+            value: value,
+          };
+          if (this.texts && this.texts.length > i && this.texts[i]) {
+            item.text = this.texts[i];
+          }
+
+          const formatted = this.itemFormatter(item);
+
+          let text = item.value;
+          let html = item.value;
+
+          if (typeof(formatted) === 'object') {
+            text = formatted.text;
+            html = formatted.html;
+
+            if (formatted.color) {
+              partElement.style.background = formatted.color;
+            }
+          } else if (typeof(formatted) === 'string') {
+            text = formatted;
+            html = formatted;
+          } else if (typeof(formatted) === 'number') {
+            text = formatted.toLocaleString();
+            html = formatted.toLocaleString();
+          }
+
+          textElement.innerHTML = html;
+          partElement.setAttribute('aria-label', text);
+          partElement.setAttribute('aria-valuenow', value);
+
+          if (this.withTitles) {
+            partElement.setAttribute('title', text);
+          }
+        }
+      }
+
+      /**
+       * Private click handler
+       * @param {event} e Original click event
+       */
+      _handlePartClick(e) {
+        const partsElement = this.shadowRoot.querySelector('.parts');
+        const partElements = partsElement.childNodes;
+        for (let i = 0; i < partElements.length; ++i) {
+          if (partElements[i] == e.target) {
+            const value = this.values[i];
+            const text = this.texts === undefined ? undefined : this.texts[i];
+            this.dispatchEvent(new CustomEvent('partclick', {
+              detail: {
+                'part': i,
+                'value': value,
+                'text': text,
+                'event': e,
+              },
+              bubbles: true,
+            }));
+            return;
+          }
+        }
+      }
+    }
+
+    window.customElements.define(DbarElement.is, DbarElement);
+
+    /**
+     * @namespace Alump
+     */
+    window.Alump.DBarElement = DbarElement;
+  </script>
+</dom-module>

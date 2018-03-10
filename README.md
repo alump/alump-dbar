@@ -57,9 +57,10 @@ After this you can just add example above to your HTML file
 
 
 ## Releases
-### 0.2.0-alpha1 (2018-03-09)
+### 0.2.0-alpha1 - alpha2 (2018-03-09)
 * Moved to alphas to try to figure out how to get webjars generated correctly
 * Work to pair web component with Vaadin 10 started
+* Adding labels for later use with Vaadin 10 (alpha 2)
 ### 0.1.6 (2018-03-09)
 * Finally found the actual SemVer issue breaking webjaring, I hope.
 ### 0.1.5 (2018-03-09)
